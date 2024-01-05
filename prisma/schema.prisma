@@ -16,6 +16,7 @@ model User {
   email     String    @unique
   createdAt String
   password  Password?
+  List      List[]
 }
 
 model Password {
@@ -23,4 +24,12 @@ model Password {
   hash   String
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
+}
+
+model List {
+  id        String @id @default(cuid())
+  name      String
+  createdAt String
+  owner     User   @relation(fields: [ownerId], references: [id])
+  ownerId   String
 }

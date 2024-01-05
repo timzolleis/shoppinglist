@@ -13,6 +13,7 @@ import isbot from 'isbot';
 import { renderToPipeableStream } from 'react-dom/server';
 import { sessionCookie } from '~/utils/session/session.server';
 import { rollingCookie } from 'remix-utils/rolling-cookie';
+import { logger } from '@remix-pwa/sw';
 
 const ABORT_DELAY = 5_000;
 
@@ -121,23 +122,4 @@ function handleBrowserRequest(
     );
 
     setTimeout(abort, ABORT_DELAY);
-  });
-}
-
-export const handleDataRequest: HandleDataRequestFunction = async (
-  response: Response,
-  { request }
-) => {
-  let cookieValue = await sessionCookie.parse(
-    response.headers.get('set-cookie')
-  );
-  if (!cookieValue) {
-    cookieValue = await sessionCookie.parse(request.headers.get('cookie'));
-    response.headers.append(
-      'Set-Cookie',
-      await sessionCookie.serialize(cookieValue)
-    );
-  }
-
-  return response;
-};
+  });}

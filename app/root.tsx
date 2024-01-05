@@ -1,6 +1,7 @@
-import type { LinksFunction } from '@remix-run/node';
+import { json, LinksFunction, LoaderFunctionArgs } from '@remix-run/node';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 import stylesheet from '~/tailwind.css';
+import { authenticator } from '~/utils/auth/authentication.server';
 
 export const links: LinksFunction = () => [
   {
@@ -8,6 +9,13 @@ export const links: LinksFunction = () => [
     href: stylesheet,
   },
 ];
+
+export const loader = async ({request}: LoaderFunctionArgs) => {
+  const user = await authenticator.isAuthenticated(request);
+  return json({user});
+
+
+}
 
 export default function App() {
   return (
