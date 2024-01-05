@@ -8,9 +8,20 @@ export function findUserLists(userId: User["id"]){
     where: {
       owner: {
         id: userId
-      }
+      },
+      deletedAt: null
     },
   });
+}
+
+export function findListById(listId: List["id"]){
+  return prisma.list.findUnique({
+    where: {
+      id: listId,
+      deletedAt: null
+    },
+  });
+
 }
 
 export function createList(name: List["name"], userId: User["id"]){
@@ -23,6 +34,17 @@ export function createList(name: List["name"], userId: User["id"]){
           id: userId
         }
       }
+    }
+  })
+}
+
+export function deleteList(listId: List["id"]){
+  return prisma.list.update({
+    where: {
+      id: listId
+    },
+    data: {
+      deletedAt: getNowAsISO()
     }
   })
 }

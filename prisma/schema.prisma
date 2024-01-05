@@ -27,12 +27,13 @@ model Password {
 }
 
 model List {
-  id        String @id @default(cuid())
+  id        String  @id @default(cuid())
   name      String
   createdAt String
-  owner     User   @relation(fields: [ownerId], references: [id])
+  owner     User    @relation(fields: [ownerId], references: [id])
   ownerId   String
   tags      Tag[]
+  deletedAt String?
 }
 
 model Tag {
