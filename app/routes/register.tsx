@@ -105,7 +105,7 @@ const LoginPage = () => {
                 <Button>Create account</Button>
                 <span className={'text-sm text-muted-foreground text-center'}>
                   Already have an account?{' '}
-                  <Link className={'font-medium underline'} to={'/register'}>
+                  <Link className={'font-medium underline'} to={'/login'}>
                     Login here
                   </Link>
                 </span>
