@@ -32,4 +32,12 @@ model List {
   createdAt String
   owner     User   @relation(fields: [ownerId], references: [id])
   ownerId   String
+  tags      Tag[]
+}
+
+model Tag {
+  id    String @id @default(cuid())
+  name  String
+  color String
+  lists List[]
 }

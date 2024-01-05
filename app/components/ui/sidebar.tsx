@@ -11,7 +11,7 @@ export const Sidebar = () => {
      <UserLogout/>
    </div>
     <div className={"flex items-center gap-2 md:mt-5"}>
-<SidebarNavItem icon={<ClipboardList className={"w-6 h-6 md:w-4 md:h-4"}/>} text={"My Lists"} url={""}/>
+<SidebarNavItem icon={<ClipboardList className={"w-6 h-6 md:w-4 md:h-4"}/>} text={"My Lists"} url={"/lists"}/>
     </div>
   </div>
 }
