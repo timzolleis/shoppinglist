@@ -4,13 +4,15 @@ import { Outlet } from '@remix-run/react';
 
 const AppLayout = () => {
   return (
-    <main className={"flex items-start"}>
-      <Sidebar/>
-     <div className={"p-5 w-full"}>
-       <Outlet/>
-     </div>
-    </main>
-  )
-}
+    < >
+      <Sidebar />
+      <div className={'p-5 w-full'}>
+        <div className={'md:pl-[200px]'}>
+          <Outlet />
+        </div>
+      </div>
+    </>
+  );
+};
 
-export default AppLayout
+export default AppLayout;
