@@ -6,15 +6,17 @@
 
 import { PassThrough } from 'node:stream';
 
-import type { AppLoadContext, EntryContext } from '@remix-run/node';
+import type { AppLoadContext, EntryContext, HandleDataRequestFunction } from '@remix-run/node';
 import { createReadableStreamFromReadable } from '@remix-run/node';
 import { RemixServer } from '@remix-run/react';
 import isbot from 'isbot';
 import { renderToPipeableStream } from 'react-dom/server';
+import { sessionCookie } from '~/utils/session/session.server';
+import { rollingCookie } from 'remix-utils/rolling-cookie';
 
 const ABORT_DELAY = 5_000;
 
-export default function handleRequest(
+export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
@@ -22,8 +24,9 @@ export default function handleRequest(
   // This is ignored so we can keep it in the template for visibility.  Feel
   // free to delete this parameter in your app if you're not using it!
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  loadContext: AppLoadContext,
+  loadContext: AppLoadContext
 ) {
+  await rollingCookie(sessionCookie, request, responseHeaders);
   return isbot(request.headers.get('user-agent'))
     ? handleBotRequest(request, responseStatusCode, responseHeaders, remixContext)
     : handleBrowserRequest(request, responseStatusCode, responseHeaders, remixContext);
@@ -33,7 +36,7 @@ function handleBotRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext,
+  remixContext: EntryContext
 ) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
@@ -50,8 +53,8 @@ function handleBotRequest(
           resolve(
             new Response(stream, {
               headers: responseHeaders,
-              status: responseStatusCode,
-            }),
+              status: responseStatusCode
+            })
           );
 
           pipe(body);
@@ -67,8 +70,8 @@ function handleBotRequest(
           if (shellRendered) {
             console.error(error);
           }
-        },
-      },
+        }
+      }
     );
 
     setTimeout(abort, ABORT_DELAY);
@@ -79,7 +82,7 @@ function handleBrowserRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext,
+  remixContext: EntryContext
 ) {
   return new Promise((resolve, reject) => {
     let shellRendered = false;
@@ -96,8 +99,8 @@ function handleBrowserRequest(
           resolve(
             new Response(stream, {
               headers: responseHeaders,
-              status: responseStatusCode,
-            }),
+              status: responseStatusCode
+            })
           );
 
           pipe(body);
@@ -113,10 +116,28 @@ function handleBrowserRequest(
           if (shellRendered) {
             console.error(error);
           }
-        },
-      },
+        }
+      }
     );
 
     setTimeout(abort, ABORT_DELAY);
   });
 }
+
+export const handleDataRequest: HandleDataRequestFunction = async (
+  response: Response,
+  { request }
+) => {
+  let cookieValue = await sessionCookie.parse(
+    response.headers.get('set-cookie')
+  );
+  if (!cookieValue) {
+    cookieValue = await sessionCookie.parse(request.headers.get('cookie'));
+    response.headers.append(
+      'Set-Cookie',
+      await sessionCookie.serialize(cookieValue)
+    );
+  }
+
+  return response;
+};
