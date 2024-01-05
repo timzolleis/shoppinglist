@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useState } from 'react';
 import { ResponsiveDialog } from '~/components/ui/responsive-dialog';
 import { Label } from '~/components/ui/label';
 import { Input } from '~/components/ui/input';
@@ -6,16 +6,14 @@ import { Button } from '~/components/ui/button';
 import { Form, useActionData, useNavigate } from '@remix-run/react';
 import { ActionFunctionArgs, json, redirect } from '@remix-run/node';
 import { zfd } from 'zod-form-data';
-import { set, z } from 'zod';
+import { z } from 'zod';
 import { authenticator } from '~/utils/auth/authentication.server';
 import { createList } from '~/models/list.server';
 import { FormErrors, getFormErrors } from '~/utils/error/error.server';
 import { useIsLoading } from '~/utils/hooks/use-is-loading';
-import { ClientOnly } from 'remix-utils/client-only';
-import { logger } from '@remix-pwa/sw';
 
 const addListSchema = zfd.formData({
-  name: zfd.text(z.string({ required_error: 'Please provide a name for your list' }))
+  name: zfd.text(z.string({ required_error: 'Please provide a name for your list' })),
 });
 
 export const action = async ({ request }: ActionFunctionArgs) => {

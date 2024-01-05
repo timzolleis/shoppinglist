@@ -11,12 +11,14 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(cuid())
-  name      String
-  email     String    @unique
-  createdAt String
-  password  Password?
-  List      List[]
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  createdAt     String
+  password      Password?
+  lists         List[]    @relation("listOwner")
+  defaultListId String?
+  defaultList   List?     @relation(fields: [defaultListId], references: [id], name: "userDefaultList")
 }
 
 model Password {
@@ -30,10 +32,11 @@ model List {
   id        String  @id @default(cuid())
   name      String
   createdAt String
-  owner     User    @relation(fields: [ownerId], references: [id])
+  owner     User    @relation(fields: [ownerId], references: [id], name: "listOwner")
   ownerId   String
   tags      Tag[]
   deletedAt String?
+  defaulted User[]  @relation("userDefaultList")
 }
 
 model Tag {
