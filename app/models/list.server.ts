@@ -4,7 +4,7 @@ import { getNowAsISO } from '~/utils/date/date';
 import { findUserById } from '~/models/user.server';
 
 
-export function findUserLists(userId: User['id']) {
+export async function findUserLists(userId: User['id']) {
   return prisma.list.findMany({
     where: {
       owner: {
@@ -15,7 +15,7 @@ export function findUserLists(userId: User['id']) {
   });
 }
 
-export function findDeletedUserLists(userId: User['id']) {
+export async function findDeletedUserLists(userId: User['id']) {
   return prisma.list.findMany({
     where: {
       owner: {
@@ -42,7 +42,7 @@ export function findListById(listId: List['id']) {
 }
 
 
-export function createList(name: List['name'], userId: User['id']) {
+export async function createList(name: List['name'], userId: User['id']) {
   return prisma.list.create({
     data: {
       createdAt: getNowAsISO(),
@@ -56,7 +56,7 @@ export function createList(name: List['name'], userId: User['id']) {
   });
 }
 
-export function deleteList(listId: List['id']) {
+export async function deleteList(listId: List['id']) {
   return prisma.list.update({
     where: {
       id: listId
@@ -67,7 +67,7 @@ export function deleteList(listId: List['id']) {
   });
 }
 
-export function recoverList(listId: List['id']) {
+export async function recoverList(listId: List['id']) {
   return prisma.list.update({
     where: {
       id: listId
@@ -78,7 +78,7 @@ export function recoverList(listId: List['id']) {
   });
 }
 
-export function hardDeleteList(listId: List['id']) {
+export async function hardDeleteList(listId: List['id']) {
   return prisma.list.delete({
     where: {
       id: listId

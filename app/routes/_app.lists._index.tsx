@@ -1,7 +1,7 @@
-import { json, LoaderFunctionArgs } from '@remix-run/node';
+import { defer, json, LoaderFunctionArgs } from '@remix-run/node';
 import { authenticator } from '~/utils/auth/authentication.server';
 import { deleteList, findListById, findUserLists, getDefaultListId } from '~/models/list.server';
-import { Link, Outlet, useLoaderData } from '@remix-run/react';
+import { Await, Link, Outlet, useLoaderData } from '@remix-run/react';
 import { NoLists } from '~/components/features/list/no-lists';
 import { ListCard } from '~/components/features/list/list-card';
 import { Plus } from 'lucide-react';
@@ -10,6 +10,7 @@ import { buttonVariants } from '~/components/ui/button';
 import { zfd } from 'zod-form-data';
 import { getErrorMessage } from '~/utils/error/error.server';
 import { setDefaultList } from '~/models/user.server';
+import { Suspense } from 'react';
 
 export const LIST_INTENTS = {
   DELETE: 'delete',
@@ -21,9 +22,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const user = await authenticator.isAuthenticated(request, {
     failureRedirect: '/login'
   });
-  const lists = await findUserLists(user.id);
-  const defaultListId = await getDefaultListId(user.id);
-  return json({ lists, defaultListId });
+  const lists =  findUserLists(user.id);
+  const defaultListId = getDefaultListId(user.id);
+  return defer({ lists, defaultListId });
 };
 
 export const listSchemas = {
@@ -84,10 +85,18 @@ export const action = async ({ request }: LoaderFunctionArgs) => {
 const ListPage = () => {
   const { lists } = useLoaderData<typeof loader>();
   return <>
-    {lists.length === 0 && <NoLists />}
-    <div className={'grid gap-2 mt-4'}>
-      {lists.map(list => <ListCard list={list} key={list.id} />)}
-    </div>
+    <Suspense>
+      <Await resolve={lists}>
+        {(lists) => (
+          <>
+            {lists.length === 0 && <NoLists />}
+            <div className={'grid gap-2 mt-4'}>
+              {lists.map(list => <ListCard list={list} key={list.id} />)}
+            </div>
+          </>
+        )}
+      </Await>
+    </Suspense>
   </>;
 
 
