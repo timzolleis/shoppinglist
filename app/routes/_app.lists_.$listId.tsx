@@ -5,7 +5,7 @@ import { Outlet, useLoaderData } from '@remix-run/react';
 import { json, LoaderFunctionArgs } from '@remix-run/node';
 import { requireRouteParam } from '~/utils/general/request.server';
 import { requireAuthentication } from '~/utils/auth/authentication.server';
-import { findListWithOwner } from '~/models/list.server';
+import { findListWithOwnerById } from '~/models/list.server';
 import { invariantResponse } from '@epic-web/invariant';
 import { requireListOwnership } from '~/utils/list/list.server';
 
@@ -13,7 +13,7 @@ import { requireListOwnership } from '~/utils/list/list.server';
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const listId = requireRouteParam('listId', params);
   const user = await requireAuthentication(request);
-  const list = await findListWithOwner(listId);
+  const list = await findListWithOwnerById(listId);
   invariantResponse(list, 'List not found');
   requireListOwnership(list, user);
   return json({ list });

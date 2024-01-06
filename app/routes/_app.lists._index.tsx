@@ -1,12 +1,9 @@
 import { defer, json, LoaderFunctionArgs } from '@remix-run/node';
 import { authenticator } from '~/utils/auth/authentication.server';
 import { deleteList, findListById, findUserLists, getDefaultListId } from '~/models/list.server';
-import { Await, Link, Outlet, useLoaderData } from '@remix-run/react';
+import { Await, useLoaderData } from '@remix-run/react';
 import { NoLists } from '~/components/features/list/no-lists';
 import { ListCard } from '~/components/features/list/list-card';
-import { Plus } from 'lucide-react';
-import { cn } from '~/utils/css/css';
-import { buttonVariants } from '~/components/ui/button';
 import { zfd } from 'zod-form-data';
 import { getErrorMessage } from '~/utils/error/error.server';
 import { setDefaultList } from '~/models/user.server';
@@ -16,7 +13,7 @@ export const LIST_INTENTS = {
   DELETE: 'delete',
   SET_DEFAULT: 'set-default',
   UNSET_DEFAULT: 'unset-default',
-  RECOVER: "recover"
+  RECOVER: 'recover'
 };
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const user = await authenticator.isAuthenticated(request, {

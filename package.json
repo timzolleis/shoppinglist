@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@epic-web/invariant": "^1.0.0",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@prisma/client": "^5.7.1",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
@@ -36,6 +37,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "concurrently": "^8.2.2",
+    "cuid": "^3.0.0",
     "dotenv": "^16.3.1",
     "eslint-import-resolver-typescript": "^3.6.1",
     "isbot": "^3.6.8",
