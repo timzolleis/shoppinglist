@@ -35,3 +35,10 @@ const strategy = new FormStrategy(async ({ form }) => {
   return user;
 });
 authenticator.use(strategy, 'user-pass');
+
+
+export async function requireAuthentication(request: Request) {
+  return await authenticator.isAuthenticated(request, {
+    failureRedirect: '/login'
+  });
+}

@@ -15,6 +15,19 @@ export async function findUserLists(userId: User['id']) {
   });
 }
 
+export async function findListWithOwner(listId: List['id']) {
+  return prisma.list.findUnique({
+    where: {
+      id: listId
+    },
+    include: {
+      owner: true
+    }
+  });
+}
+
+export type ListWithOwner = Awaited<ReturnType<typeof findListWithOwner>>
+
 export async function findDeletedUserLists(userId: User['id']) {
   return prisma.list.findMany({
     where: {
