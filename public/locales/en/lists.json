@@ -1,3 +1,17 @@
 {
-  "create_list": "create list"
+  "noLists": {
+    "createList": "create list",
+    "description": "You have no lists yet. Create one to get started.",
+    "header": "no lists"
+  },
+  "noDeletedLists": {
+    "header": "No deleted lists",
+    "description": "You didnt delete anything yet! Nice!",
+    "seeMyLists": "See my lists"
+  },
+  "listLayout": {
+    "allLists": "All Lists",
+    "deletedLists": "Deleted Lists",
+    "header": "Lists"
+  }
 }

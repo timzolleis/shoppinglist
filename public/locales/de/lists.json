@@ -1,3 +1,17 @@
 {
-  "create_list": "Neue Liste anlegen"
+  "noLists": {
+    "createList": "Neue Liste anlegen",
+    "description": "Du hast noch keine Listen, leg mal eine an und ab geht die Post",
+    "header": "Hier ist die blanke Einöde, wo eigentlich blühende Listen sein sollten"
+  },
+  "noDeletedLists": {
+    "description": "Du hast noch nichts gelöscht! Sehr schön!",
+    "seeMyLists": "Meine Listen",
+    "header": "Keine gelöschten Listen"
+  },
+  "listLayout": {
+    "allLists": "Alle Listen",
+    "deletedLists": "Gelöschte Listen",
+    "header": "Listen"
+  }
 }

@@ -13,13 +13,13 @@ export const NoLists = () => {
      </span>
    </span>
     <div className={"mt-4"}>
-      <h2 className={"font-semibold text-xl"}>No lists</h2>
-      <p className={"text-muted-foreground text-sm"}>You have no lists yet. Create one to get started.</p>
+      <h2 className={'font-semibold text-xl'}>{t('noLists.header')}</h2>
+      <p className={'text-muted-foreground text-sm'}>{t('noLists.description')}</p>
     </div>
     <div className={"mt-4"}>
       <Link to={'/lists/new'} className={cn(buttonVariants({ size: 'sm' }), 'gap-2')}>
         <Plus className={'w-4 h-4'} />
-        {t('create_list')}
+        {t('noLists.createList')}
       </Link>
     </div>
   </div>

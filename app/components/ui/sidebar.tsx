@@ -1,17 +1,21 @@
 import { UserLogout } from '~/components/features/user/user-logout';
 import { ReactNode } from 'react';
-import { Link, NavLink } from '@remix-run/react';
-import { ClipboardList, ListIcon } from 'lucide-react';
+import { NavLink } from '@remix-run/react';
+import { ClipboardList } from 'lucide-react';
 import { cn } from '~/utils/css/css';
+import { useTranslation } from 'react-i18next';
 
 
 export const Sidebar = () => {
+  const { t } = useTranslation('navigation');
+
   return <div className={"border-r fixed bottom-0 border-t w-full bg-secondary/30 px-5 py-3 md:p-5 md:top-0 md:h-screen md:w-[200px]"}>
    <div className={"hidden md:block"}>
      <UserLogout/>
    </div>
     <div className={"flex items-center gap-2 md:mt-5"}>
-<SidebarNavItem icon={<ClipboardList className={"w-6 h-6 md:w-4 md:h-4"}/>} text={"My Lists"} url={"/lists"}/>
+      <SidebarNavItem icon={<ClipboardList className={'w-6 h-6 md:w-4 md:h-4'} />} text={t('sidebar.myLists')}
+                      url={'/lists'} />
     </div>
   </div>
 }
