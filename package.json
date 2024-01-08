@@ -11,7 +11,8 @@
     "build:worker": "remix-pwa build",
     "dev": "concurrently \"yarn dev:remix\" \"yarn dev:worker\"",
     "dev:remix": "remix dev --manual",
-    "dev:worker": "remix-pwa dev"
+    "dev:worker": "remix-pwa dev",
+    "locale:generate": "tsx app/utils/locale/resources.ts"
   },
   "dependencies": {
     "@epic-web/invariant": "^1.0.0",
@@ -60,6 +61,7 @@
     "tailwind-merge": "^2.2.0",
     "tailwindcss": "^3.4.0",
     "tailwindcss-animate": "^1.0.7",
+    "tsx": "^4.7.0",
     "usehooks-ts": "^2.9.1",
     "vaul": "^0.8.0",
     "zod": "^3.22.4",
