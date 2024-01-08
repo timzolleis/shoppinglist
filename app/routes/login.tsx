@@ -1,4 +1,4 @@
-import { Form, Link, useActionData } from '@remix-run/react';
+import { Form, isRouteErrorResponse, Link, useActionData, useRouteError } from '@remix-run/react';
 import { Label } from '~/components/ui/label';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
@@ -7,6 +7,7 @@ import { ShoppingBag } from 'lucide-react';
 import { authenticator } from '~/utils/auth/authentication.server';
 import { AuthorizationError } from 'remix-auth';
 import { useIsLoading } from '~/utils/hooks/use-is-loading';
+import { useTranslation } from 'react-i18next';
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
@@ -28,6 +29,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 const LoginPage = () => {
   const actionData = useActionData<{ error?: string }>();
   const isLoading = useIsLoading();
+  const { t } = useTranslation('authentication');
   return (
     <>
       <div className='p-8 flex h-screen items-center'>
@@ -36,17 +38,17 @@ const LoginPage = () => {
             <span className={'w-full flex justify-center'}>
               <ShoppingBag size={48} />
             </span>
-            <h1 className='text-2xl font-semibold tracking-tight'>Welcome back</h1>
+            <h1 className="text-2xl font-semibold tracking-tight">{t('login.header')}</h1>
           </div>
           <div>
             <Form method={'post'}>
               <div className='grid gap-2'>
                 <div className='grid gap-2'>
-                  <Label htmlFor='email'>Email</Label>
+                  <Label htmlFor="email">{t('login.fields.email.label')}</Label>
                   <Input
                     name={'email'}
                     id='email'
-                    placeholder='name@example.com'
+                    placeholder={t('login.fields.email.placeholder')}
                     type='email'
                     autoCapitalize='none'
                     autoComplete='email'
@@ -54,20 +56,20 @@ const LoginPage = () => {
                   />
                 </div>
                 <div className='grid gap-2'>
-                  <Label htmlFor='password'>Password</Label>
+                  <Label htmlFor="password">{t('login.fields.password.label')}</Label>
                   <Input
                     name={'password'}
                     id='password'
-                    placeholder='examplepassword'
+                    placeholder={t('login.fields.password.placeholder')}
                     type='password'
                     autoComplete={'off'}
                   />
                 </div>
-                <Button isLoading={isLoading}>Sign In</Button>
+                <Button isLoading={isLoading}>{t('login.buttons.signIn')}</Button>
                 <span className={'text-sm text-muted-foreground text-center'}>
-                  Do not have an account?{' '}
+                 {t('login.footer.noAccount')} {' '}
                   <Link className={'font-medium underline'} to={'/register'}>
-                    Register here
+                    {t('login.footer.register')}
                   </Link>
                 </span>
               </div>
@@ -82,4 +84,30 @@ const LoginPage = () => {
   );
 };
 
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        <h1>
+          {error.status} {error.statusText}
+        </h1>
+        <p>{error.data}</p>
+      </div>
+    );
+  } else if (error instanceof Error) {
+    return (
+      <div>
+        <h1>Error</h1>
+        <p>{error.message}</p>
+        <p>The stack trace is:</p>
+        <pre>{error.stack}</pre>
+      </div>
+    );
+  } else {
+    return <h1>Unknown Error</h1>;
+  }
+}
 export default LoginPage;
