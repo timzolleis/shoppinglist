@@ -8,6 +8,7 @@ import { requireAuthentication } from '~/utils/auth/authentication.server';
 import { findListWithOwnerById } from '~/models/list.server';
 import { invariantResponse } from '@epic-web/invariant';
 import { requireListOwnership } from '~/utils/list/list.server';
+import { useTranslation } from 'react-i18next';
 
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
@@ -22,11 +23,14 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 const ListDetailLayout = () => {
   const data = useLoaderData<typeof loader>();
   const { listId } = useParams();
+  const { t } = useTranslation('lists');
   return <>
     <h2 className={'text-2xl font-semibold'}>{data?.list.name}</h2>
     <TablinkContainer>
-      <Tablink to={LIST_LINKS.DETAILS(listId)}>Overview</Tablink>
-      <Tablink to={LIST_LINKS.SETTINGS(listId)}>Settings</Tablink>
+      <Tablink to={LIST_LINKS.DETAILS(listId)}>{t('listDetailsLayout.overview')}</Tablink>
+      <Tablink to={LIST_LINKS.SETTINGS(listId)}>{t('listDetailsLayout.settings')}</Tablink>
+      <Tablink to={LIST_LINKS.MEMBERS(listId)}>{t('listDetailsLayout.members')}</Tablink>
+      <Tablink to={LIST_LINKS.INVITES(listId)}>{t('listDetailsLayout.invites')}</Tablink>
     </TablinkContainer>
     <div>
       <Outlet />

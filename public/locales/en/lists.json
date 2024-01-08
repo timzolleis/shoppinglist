@@ -13,5 +13,16 @@
     "allLists": "All Lists",
     "deletedLists": "Deleted Lists",
     "header": "Lists"
+  },
+  "listDetailsLayout": {
+    "overview": "Overview",
+    "settings": "Settings",
+    "members": "Members",
+    "invites": "Invites"
+  },
+  "noMembers": {
+    "header": "No members",
+    "description": "You have no members in this list yet. Invite some to get started.",
+    "inviteMembers": "Invite members"
   }
 }

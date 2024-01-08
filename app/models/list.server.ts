@@ -50,7 +50,7 @@ export async function getDefaultListId(userId: User['id']) {
 export function findListById(listId: List['id']) {
   return prisma.list.findUnique({
     where: {
-      id: listId,
+      id: listId
     }
   });
 }
@@ -106,5 +106,17 @@ export async function updateList(listId: List['id'], data: Partial<List>) {
       id: listId
     },
     data
+  });
+}
+
+export async function findListMembers(listId: List['id']) {
+  return prisma.user.findMany({
+    where: {
+      memberships: {
+        some: {
+          id: listId
+        }
+      }
+    }
   });
 }

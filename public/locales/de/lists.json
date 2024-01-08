@@ -13,5 +13,16 @@
     "allLists": "Alle Listen",
     "deletedLists": "Gelöschte Listen",
     "header": "Listen"
+  },
+  "listDetailsLayout": {
+    "overview": "Übersicht",
+    "settings": "Einstellungen",
+    "members": "Mitglieder",
+    "invites": "Einladungen"
+  },
+  "noMembers": {
+    "header": "Keine Mitglieder",
+    "description": "Aktuell befinden sich keine Mitglieder in dieser Liste. Füge welche hinzu, um sie zu teilen.",
+    "inviteMembers": "Mitglieder einladen"
   }
 }
