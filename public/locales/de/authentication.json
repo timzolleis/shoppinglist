@@ -1,5 +1,50 @@
 {
-  "signin": "Anmelden",
-  "password": "Passwort",
-  "examplepassword": "Beispiel"
+  "login": {
+    "header": "Willkommen zurück",
+    "fields": {
+      "email": {
+        "label": "Email",
+        "placeholder": "example@test.com"
+      },
+      "password": {
+        "label": "Passwort",
+        "placeholder": "meinpasswort"
+      }
+    },
+    "buttons": {
+      "signIn": "Anmelden"
+    },
+    "footer": {
+      "noAccount": "Noch keinen Account?",
+      "register": "Hier registrieren"
+    }
+  },
+  "register": {
+    "header": "Account erstellen",
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Max Mustermann"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "hello@example.com"
+      },
+      "password": {
+        "label": "Passwort",
+        "placeholder": "meinpasswort"
+      },
+      "repeatPassword": {
+        "label": "Passwort wiederholen",
+        "placeholder": "meinpasswort"
+      }
+    },
+    "buttons": {
+      "createAccount": "Account erstellen"
+    },
+    "footer": {
+      "haveAccount": "Bereits einen Account?",
+      "login": "Hier anmelden"
+    }
+  }
 }
