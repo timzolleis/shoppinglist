@@ -34,7 +34,7 @@ const NewListPage = () => {
   const [showDialog] = useState(true);
   const navigate = useNavigate();
   const actionData = useActionData<{ formErrors?: FormErrors<z.infer<typeof addListSchema>> }>();
-  const isLoading = useIsLoading('name');
+  const isLoading = useIsLoading();
   return (
     <>
         <ResponsiveDialog open={showDialog} onClose={(value) =>  !value && navigate('/lists')}

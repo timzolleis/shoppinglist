@@ -18,6 +18,7 @@ import { findUserByEmailAndListId } from '~/models/user.server';
 import { createInvite, findInviteByEmailAndListId } from '~/models/list-invites.server';
 import { FormErrors, getFormErrors } from '~/utils/error/error.server';
 import { z } from 'zod';
+import { useIsLoading } from '~/utils/hooks/use-is-loading';
 
 
 //TODO: Translate error messages using fixedT
@@ -57,6 +58,9 @@ const CreateInvitePage = () => {
     error?: string,
     formErrors?: FormErrors<z.infer<typeof inviteSchemas.create>>;
   }>();
+  const isLoading = useIsLoading();
+
+
   return <Dialog open={showDialog} onOpenChange={(open) => {
     if (!open) {
       navigate(LIST_LINKS.INVITES(listId));
@@ -74,7 +78,7 @@ const CreateInvitePage = () => {
           <p className={'text-sm text-red-500'}>{actionData?.formErrors?.email || actionData?.error}</p>
         </div>
         <div>
-          <Button className={'w-full'}>{t('invites.new.buttons.create')}</Button>
+          <Button isLoading={isLoading} className={'w-full'}>{t('invites.new.buttons.create')}</Button>
         </div>
       </Form>
     </DialogContent>

@@ -20,7 +20,6 @@ const ListLayout = () => {
     <TablinkContainer>
       <Tablink to={'/lists'}>{t('listLayout.allLists')}</Tablink>
       <Tablink to={'/lists/deleted'}>{t('listLayout.deletedLists')}</Tablink>
-      <Tablink to={'/lists/members'}>{t('listLayout.members')}</Tablink>
     </TablinkContainer>
     <div className={"mt-4"}>
       <Outlet />

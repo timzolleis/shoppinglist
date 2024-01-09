@@ -47,6 +47,11 @@
       "buttons": {
         "create": "Create Invite"
       }
+    },
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "declined": "Declined"
     }
   }
 }

@@ -51,6 +51,7 @@ model ListInvite {
   userId    String?
   user      User?   @relation(fields: [userId], references: [id])
   createdAt String
+  status    String  @default("pending")
 }
 
 model Tag {

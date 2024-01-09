@@ -12,7 +12,8 @@
     "dev": "concurrently \"yarn dev:remix\" \"yarn dev:worker\"",
     "dev:remix": "remix dev --manual",
     "dev:worker": "remix-pwa dev",
-    "locale:generate": "tsx app/utils/locale/index.ts"
+    "locale:generate": "tsx app/utils/locale/index.ts",
+    "prisma:hash": "shasum -a 256"
   },
   "dependencies": {
     "@epic-web/invariant": "^1.0.0",

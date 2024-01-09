@@ -27,6 +27,12 @@ export async function createInvite(email: ListInvite['email'], listId: List['id'
       listId
     }
   });
+}
 
-
+export async function deleteInvite(inviteId: ListInvite['id']) {
+  return prisma.listInvite.delete({
+    where: {
+      id: inviteId
+    }
+  });
 }

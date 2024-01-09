@@ -43,7 +43,15 @@
           "label": "Gültigkeitsdauer (Tage)",
           "placeholder": "7"
         }
+      },
+      "buttons": {
+        "create": "Neue Einladung"
       }
+    },
+    "status": {
+      "pending": "Ausstehend",
+      "declined": "Abgelehnt",
+      "accepted": "Akzeptiert"
     }
   }
 }

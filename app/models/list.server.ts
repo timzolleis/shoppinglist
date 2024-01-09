@@ -27,6 +27,15 @@ export async function findListWithOwnerById(listId: List['id']) {
   });
 }
 
+
+export async function findListAndRequireOwnership(listId: List['id'], userId: User['id']) {
+  const list = await findListWithOwnerById(listId);
+  if (!list || list.owner.id !== userId) {
+    throw new Error('List not found');
+  }
+  return list;
+}
+
 export type ListWithOwner = Awaited<ReturnType<typeof findListWithOwnerById>>
 
 export async function findDeletedUserLists(userId: User['id']) {

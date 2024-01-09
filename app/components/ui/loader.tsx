@@ -12,7 +12,7 @@ export const Loader = ({ size = 20 }: { size?: number }) => {
           <div
             key={i}
             className={cn(
-              'absolute -left-[10%] -top-[3.9%] h-[8%] w-[24%] animate-spinner-loading-bar bg-black mix-blend-color-burn dark:bg-white dark:mix-blend-normal',
+              'absolute -left-[10%] -top-[3.9%] h-[8%] w-[24%] animate-spinner-loading-bar bg-primary-foreground'
             )}
             style={{
               transform: `rotate(${(i + 1) * 30}deg) translate(146%)`,
