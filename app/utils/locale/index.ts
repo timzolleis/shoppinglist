@@ -25,7 +25,8 @@ function index() {
     writeParseReport(report).then(() => console.log(`✅ Successfully generated translation report - please check ${translationReportPath} for more details`));
   }
   //Generate  type imports
-  writeImports(files);
+  const referenceFiles = files.filter(file => file.locale === referenceLocale);
+  writeImports(referenceFiles);
 }
 
 index();

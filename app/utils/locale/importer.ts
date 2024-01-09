@@ -24,7 +24,7 @@ export function writeImports(files: TranslationFile[]) {
 }
 
 function getNewResourcesObject(data: string, files: TranslationFile[]) {
-  const newContent = files.map((file) => file.name).join(',\n');
+  const newContent = files.map(file => file.name).join(',\n');
   const regexPattern = /export const resources = \{[^}]*} as const;/;
   return data.replace(regexPattern, `export const resources = { ${newContent} } as const;`);
 }
