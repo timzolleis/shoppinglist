@@ -24,5 +24,29 @@
     "header": "No members",
     "description": "You have no members in this list yet. Invite some to get started.",
     "inviteMembers": "Invite members"
+  },
+  "noInvites": {
+    "header": "No Invites",
+    "description": "You have no invites in this list yet. Invite someone to get started.",
+    "inviteMembers": "Invite members"
+  },
+  "invites": {
+    "new": {
+      "header": "New Invite",
+      "description": "Create a new invite for this list to share it with someone",
+      "fields": {
+        "email": {
+          "label": "E-Mail",
+          "placeholder": "E-Mail"
+        },
+        "validity": {
+          "label": "Validity (days)",
+          "placeholder": "7"
+        }
+      },
+      "buttons": {
+        "create": "Create Invite"
+      }
+    }
   }
 }

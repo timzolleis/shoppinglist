@@ -12,6 +12,19 @@ export function findUserById(id: User['id']) {
   });
 }
 
+export function findUserByEmailAndListId(email: User['email'], listId: List['id']) {
+  return prisma.user.findFirst({
+    where: {
+      email,
+      lists: {
+        some: {
+          id: listId
+        }
+      }
+    }
+  });
+}
+
 export async function findUserWithPasswordByEmail(email: User['email']) {
   return prisma.user.findUnique({
     where: { email },

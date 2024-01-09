@@ -7,6 +7,4 @@ export const LIST_LINKS = {
   MEMBERS: (listId?: string) => `/lists/${listId}/members`,
   INVITES: (listId?: string) => `/lists/${listId}/invites`,
   INVITES_NEW: (listId?: string) => `/lists/${listId}/invites/new`
-
-
 };
