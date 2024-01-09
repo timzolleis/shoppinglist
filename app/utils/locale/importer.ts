@@ -1,11 +1,12 @@
 import fs from 'fs';
 import { TranslationFile } from '~/utils/locale/parser';
 import * as path from 'path';
+import * as prettier from 'prettier';
 
 export const resourceFileRoot = 'app/utils/locale/resources.ts';
 const tsAliasedReferenceImportPath = '@/locales/en';
 
-export function writeImports(files: TranslationFile[]) {
+export async function writeImports(files: TranslationFile[]) {
   console.log('🔄Generating type imports...');
   const regexPattern = /import .+ from ['"].+\.json['"];/;
   //Remove all imports at the top of this file
@@ -19,7 +20,8 @@ export function writeImports(files: TranslationFile[]) {
     }
   );
   const newContent = getNewResourcesObject(newLines.join('\n'), files);
-  fs.writeFileSync('app/utils/locale/resources.ts', newContent);
+  const formattedContent = await prettier.format(newContent, { parser: 'typescript' });
+  fs.writeFileSync('app/utils/locale/resources.ts', formattedContent);
   console.log('✅ Successfully generated type imports');
 }
 
