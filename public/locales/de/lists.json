@@ -31,6 +31,7 @@
     "inviteMembers": "Mitglieder einladen"
   },
   "invites": {
+    "header": "Einladungen",
     "new": {
       "header": "Neue Einladung",
       "description": "Erstelle eine neue Einladung, um sie mit anderen zu teilen.",

@@ -7,3 +7,8 @@ export function requireRouteParam(param: string, params: Params) {
   }
   return value;
 }
+
+export function getSearchParam(url: string, param: string) {
+  const searchParams = new URLSearchParams(url);
+  return searchParams.get(param);
+}

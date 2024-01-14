@@ -9,7 +9,7 @@ import { deleteInvite, findInvitesForList } from '~/models/list-invites.server';
 import { NoInvites } from '~/components/features/list-invites/no-invites';
 import { zfd } from 'zod-form-data';
 import { z } from 'zod';
-import { InviteCard } from '~/components/features/list-invites/invite-card';
+import { InviteAdminCard } from '~/components/features/list-invites/invite-admin-card';
 import { getErrorMessage, getFormErrors } from '~/utils/error/error.server';
 import { LIST_LINKS } from '~/links/list';
 import { buttonVariants } from '~/components/ui/button';
@@ -39,7 +39,9 @@ export const inviteSchemas = {
 };
 
 export const LIST_INVITE_INTENTS = {
-  DELETE: 'delete'
+  DELETE: 'delete',
+  ACCEPT: 'accept',
+  DECLINE: 'decline'
 };
 
 export const action = async ({ request, params }: LoaderFunctionArgs) => {
@@ -64,8 +66,6 @@ export const action = async ({ request, params }: LoaderFunctionArgs) => {
       return json({ error: 'NOT_IMPLEMENTED' }, { status: 501 });
     }
   }
-
-
 };
 
 
@@ -84,7 +84,7 @@ const ListMembersPage = () => {
             <>
               {invites.length === 0 && <NoInvites />}
               {invites.map((invite) => (
-                <InviteCard key={invite.id} invite={invite} />
+                <InviteAdminCard key={invite.id} invite={invite} />
               ))}
             </>
           )}

@@ -1,6 +1,19 @@
 import { prisma } from '~/utils/db/prisma.server';
-import { List, ListInvite } from '@prisma/client';
+import { List, ListInvite, User } from '@prisma/client';
 import { getNowAsISO } from '~/utils/date/date';
+
+
+export async function findInvitesForUser(email: User['email'], showAll = false) {
+  return prisma.listInvite.findMany({
+    where: {
+      email,
+      status: showAll ? undefined : 'pending'
+    },
+    include: {
+      list: true
+    }
+  });
+}
 
 export async function findInvitesForList(listId: List['id']) {
   return prisma.listInvite.findMany({

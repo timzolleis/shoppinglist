@@ -31,6 +31,7 @@
     "inviteMembers": "Invite members"
   },
   "invites": {
+    "header": "Invites",
     "new": {
       "header": "New Invite",
       "description": "Create a new invite for this list to share it with someone",

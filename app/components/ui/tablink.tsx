@@ -4,7 +4,7 @@ import { cn } from '~/utils/css/css';
 
 
 export const TablinkContainer = ({ children }: { children: ReactNode }) => {
- return <div className={"flex items-center gap-2 border-b"}>
+  return <div className={'flex items-center gap-2 border-b overflow-scroll'}>
    {children}
  </div>
 }

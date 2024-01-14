@@ -6,8 +6,9 @@ const AppLayout = () => {
   return (
     < >
       <Sidebar />
-      <div className={'p-5 w-full'}>
-        <div className={'md:pl-[200px]'}>
+      <div className={'w-full min-h-screen'}>
+        <div className={'h-[57px]'}></div>
+        <div className={'md:pl-[200px] p-5'}>
           <Outlet />
         </div>
       </div>
