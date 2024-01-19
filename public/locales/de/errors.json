@@ -1,0 +1,8 @@
+{
+  "user": {
+    "alreadyInvited": "Dieser Benutzer wurde bereits eingeladen."
+  },
+  "form": {
+    "invalid": "Bitte überprüfen Sie Ihre Eingaben."
+  }
+}

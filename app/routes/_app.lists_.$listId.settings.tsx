@@ -127,11 +127,15 @@ const ListSettingsPage = () => {
   }, [fetcher.formData]);
 
   return <div>
-    <main className={'grid gap-4 mt-6'}>
+    <main className={'grid gap-10 mt-6'}>
       <Form id={'generalSettingsForm'} method={'post'}>
-        <div className={'grid gap-2'}>
+        <div className={'grid gap-4'}>
           <Label htmlFor={'name'}>List name</Label>
           <Input id={'name'} name={'name'} defaultValue={list.name}></Input>
+        </div>
+        <div className={'flex justify-start mt-2'}>
+          <Button size={'sm'} name={'intent'} value={LIST_SETTINGS_INTENTS.UPDATE}>Update
+            list</Button>
         </div>
       </Form>
       <fetcher.Form id={'tagForm'} method={'post'}>
@@ -156,10 +160,6 @@ const ListSettingsPage = () => {
           </div>
       </div>
       </fetcher.Form>
-      <div className={'flex justify-start'}>
-        <Button form={'generalSettingsForm'} size={'sm'} name={'intent'} value={LIST_SETTINGS_INTENTS.UPDATE}>Update
-          list</Button>
-      </div>
     </main>
   </div>;
 };

@@ -5,7 +5,8 @@ import { authenticator } from '~/utils/auth/authentication.server';
 import i18next from '~/i18next.server';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
-import { Toaster } from '~/components/ui/toaster';
+import { getToast } from 'remix-toast';
+import { toast as notify, Toaster } from 'sonner';
 
 export const links: LinksFunction = () => [
   {
@@ -16,9 +17,10 @@ export const links: LinksFunction = () => [
 
 export const loader = async ({request}: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
+  const { toast, headers } = await getToast(request);
   const user = await authenticator.isAuthenticated(request);
   const userWithoutPassword = user ? { ...user, password: undefined } : null;
-  return json({ locale, user: userWithoutPassword });
+  return json({ locale, user: userWithoutPassword, toast }, { headers });
 }
 
 export const handle = {
@@ -43,10 +45,19 @@ export function useChangeLanguage(locale: string) {
 }
 
 export default function App() {
-  const { locale } = useLoaderData<typeof loader>();
+  const { locale, toast } = useLoaderData<typeof loader>();
 
   const { i18n } = useTranslation();
 
+
+  useEffect(() => {
+    if (toast?.type === 'error') {
+      notify.error(toast.message);
+    }
+    if (toast?.type === 'success') {
+      notify.success(toast.message);
+    }
+  }, [toast]);
   // This hook will change the i18n instance language to the current locale
   // detected by the loader, this way, when we do something to change the
   // language, this locale will change and i18next will load the correct
