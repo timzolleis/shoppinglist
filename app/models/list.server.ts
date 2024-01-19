@@ -1,4 +1,4 @@
-import { List, User } from '@prisma/client';
+import { List, Prisma, User } from '@prisma/client';
 import { prisma } from '~/utils/db/prisma.server';
 import { getNowAsISO } from '~/utils/date/date';
 import { findUserById } from '~/models/user.server';
@@ -15,7 +15,7 @@ export async function findUserLists(userId: User['id']) {
   });
 }
 
-export async function findListWithOwnerById(listId: List['id']) {
+export async function findListWithOwnerAndTagsById(listId: List['id']) {
   return prisma.list.findUnique({
     where: {
       id: listId
@@ -27,16 +27,30 @@ export async function findListWithOwnerById(listId: List['id']) {
   });
 }
 
+export async function findListWithOwner(listId: List['id']) {
+  return prisma.list.findUnique({
+    where: {
+      id: listId
+    },
+    include: {
+      owner: true
+    }
+  });
+
+}
+
+
 
 export async function findListAndRequireOwnership(listId: List['id'], userId: User['id']) {
-  const list = await findListWithOwnerById(listId);
+  const list = await findListWithOwnerAndTagsById(listId);
   if (!list || list.owner.id !== userId) {
     throw new Error('List not found');
   }
   return list;
 }
 
-export type ListWithOwner = Awaited<ReturnType<typeof findListWithOwnerById>>
+export type ListWithOwner = Awaited<ReturnType<typeof findListWithOwner>>
+export type ListWithOwnerAndTags = Awaited<ReturnType<typeof findListWithOwnerAndTagsById>>
 
 export async function findDeletedUserLists(userId: User['id']) {
   return prisma.list.findMany({
@@ -109,7 +123,7 @@ export async function hardDeleteList(listId: List['id']) {
   });
 }
 
-export async function updateList(listId: List['id'], data: Partial<List>) {
+export async function updateList(listId: List['id'], data: Prisma.ListUncheckedUpdateInput) {
   return prisma.list.update({
     where: {
       id: listId

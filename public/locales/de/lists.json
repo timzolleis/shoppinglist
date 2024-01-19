@@ -18,7 +18,8 @@
     "overview": "Übersicht",
     "settings": "Einstellungen",
     "members": "Mitglieder",
-    "invites": "Einladungen"
+    "invites": "Einladungen",
+    "pendingInvites": "Ausstehende Einladungen"
   },
   "noMembers": {
     "header": "Keine Mitglieder",
@@ -54,5 +55,9 @@
       "declined": "Abgelehnt",
       "accepted": "Akzeptiert"
     }
+  },
+  "listInvitesLayout": {
+    "showAll": "Alle",
+    "showOpen": "Offen"
   }
 }

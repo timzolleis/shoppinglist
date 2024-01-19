@@ -1,7 +1,7 @@
 import { json, LoaderFunctionArgs } from '@remix-run/node';
 import { requireRouteParam } from '~/utils/general/request.server';
 import { requireAuthentication } from '~/utils/auth/authentication.server';
-import { findListWithOwnerById, updateList } from '~/models/list.server';
+import { findListWithOwnerAndTagsById, updateList } from '~/models/list.server';
 import { requireListOwnership } from '~/utils/list/list.server';
 import { Form, useFetcher, useLoaderData } from '@remix-run/react';
 import { invariantResponse } from '@epic-web/invariant';
@@ -21,7 +21,7 @@ import { ListTag } from '~/components/features/list/list-tag';
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const listId = requireRouteParam('listId', params);
   const user = await requireAuthentication(request);
-  const list = await findListWithOwnerById(listId);
+  const list = await findListWithOwnerAndTagsById(listId);
   invariantResponse(list, 'List not found');
   requireListOwnership(list, user);
   const randomColor = getRandomColor();
@@ -58,7 +58,7 @@ export const action = async ({ request, params }: LoaderFunctionArgs) => {
     case LIST_SETTINGS_INTENTS.UPDATE: {
       try {
         const { name } = listSettingsSchemas.update.parse(formData);
-        const list = await findListWithOwnerById(listId);
+        const list = await findListWithOwnerAndTagsById(listId);
         requireListOwnership(list, user);
         await updateList(listId, { name });
         return json({

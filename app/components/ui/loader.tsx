@@ -2,7 +2,7 @@ import { cn } from '~/utils/css/css';
 
 const bars = Array(12).fill(0);
 
-export const Loader = ({ size = 20 }: { size?: number }) => {
+export const Loader = ({ size = 20, className }: { size?: number, className?: string }) => {
   return (
     <div style={{ height: `${size}px`, width: `${size}px` }}>
       <div
@@ -12,7 +12,7 @@ export const Loader = ({ size = 20 }: { size?: number }) => {
           <div
             key={i}
             className={cn(
-              'absolute -left-[10%] -top-[3.9%] h-[8%] w-[24%] animate-spinner-loading-bar bg-primary-foreground'
+              'absolute -left-[10%] -top-[3.9%] h-[8%] w-[24%] animate-spinner-loading-bar bg-primary-foreground', className
             )}
             style={{
               transform: `rotate(${(i + 1) * 30}deg) translate(146%)`,

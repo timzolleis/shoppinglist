@@ -5,6 +5,7 @@ import { authenticator } from '~/utils/auth/authentication.server';
 import i18next from '~/i18next.server';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
+import { Toaster } from '~/components/ui/toaster';
 
 export const links: LinksFunction = () => [
   {
@@ -16,7 +17,8 @@ export const links: LinksFunction = () => [
 export const loader = async ({request}: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
   const user = await authenticator.isAuthenticated(request);
-  return json({ locale, user });
+  const userWithoutPassword = user ? { ...user, password: undefined } : null;
+  return json({ locale, user: userWithoutPassword });
 }
 
 export const handle = {
@@ -66,6 +68,7 @@ export default function App() {
       <Links />
     </head>
     <body className={'dark font-inter'}>
+    <Toaster />
     <Outlet />
     <ScrollRestoration />
     <Scripts />

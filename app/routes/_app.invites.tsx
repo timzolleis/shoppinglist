@@ -1,18 +1,22 @@
 import { ActionFunctionArgs, defer, json, LoaderFunctionArgs } from '@remix-run/node';
 import { requireAuthentication } from '~/utils/auth/authentication.server';
 import { getSearchParam } from '~/utils/general/request.server';
-import { findInvitesForUser } from '~/models/list-invites.server';
-import { Await, useLoaderData } from '@remix-run/react';
+import { findInviteById, findInvitesForUser, updateInvite } from '~/models/list-invites.server';
+import { Await, useLoaderData, useSearchParams } from '@remix-run/react';
 import { PageHeader } from '~/components/features/page/page-header';
 import { useTranslation } from 'react-i18next';
 import { Suspense } from 'react';
 import { InviteCard } from '~/components/features/list-invites/invite-card';
 import { zfd } from 'zod-form-data';
-import { LIST_INVITE_INTENTS } from '~/routes/_app.lists_.$listId.invites';
+import { LIST_INVITE_INTENTS } from '~/routes/_app.lists_.$listId.members';
 import { getErrorMessage, getFormErrors } from '~/utils/error/error.server';
+import { updateList } from '~/models/list.server';
+import { invariantResponse } from '@epic-web/invariant';
+import { getNowAsISO } from '~/utils/date/date';
+import { Badge } from '~/components/ui/badge';
 
 
-export const loader = async ({ request, params }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const user = await requireAuthentication(request);
   const showAll = getSearchParam(request.url, 'showAll');
   //Get all invites for the user
@@ -21,21 +25,39 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 };
 
 const listInviteSchema = zfd.formData({
-  listId: zfd.text(),
-  intent: zfd.text()
+  intent: zfd.text(),
+  inviteId: zfd.text()
 });
 
-export const action = async ({ request, params }: ActionFunctionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
+  const user = await requireAuthentication(request);
   const formData = await request.formData();
   try {
-    const { listId, intent } = listInviteSchema.parse(formData);
+    const { inviteId, intent } = listInviteSchema.parse(formData);
+    const invite = await findInviteById(inviteId);
+    invariantResponse(invite, 'errors.inviteNotFound');
     switch (intent) {
       case LIST_INVITE_INTENTS.ACCEPT: {
-        //TODO: Accept invite
+        //First, add the user to the list
+        await updateList(invite.listId, {
+          members: {
+            connect: {
+              id: user.id
+            }
+          }
+        });
+        //Then, update the status of the invite
+        await updateInvite(inviteId, {
+          status: 'accepted',
+          usedAt: getNowAsISO()
+        });
         return json({ success: true });
       }
       case LIST_INVITE_INTENTS.DECLINE: {
-        //TODO: Decline invite
+        await updateInvite(inviteId, {
+          status: 'declined',
+          usedAt: getNowAsISO()
+        });
         return json({ success: true });
       }
     }
@@ -49,15 +71,30 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 const InvitesPage = () => {
   const { invites } = useLoaderData<typeof loader>();
   const { t } = useTranslation('lists');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const showAll = searchParams.get('showAll') === 'true';
+  const setShowAll = (showAll: boolean) => {
+    searchParams.set('showAll', showAll.toString());
+    setSearchParams(searchParams);
+  };
+
 
   return (
     <>
       <PageHeader>{t('invites.header')}</PageHeader>
+      <div className={'flex items-center gap-2'}>
+        <Badge onClick={() => setShowAll(false)}
+               variant={showAll ? 'outline' : 'default'}>{t('listInvitesLayout.showOpen')}</Badge>
+        <Badge onClick={() => setShowAll(true)}
+               variant={showAll ? 'default' : 'outline'}>{t('listInvitesLayout.showAll')}</Badge>
+      </div>
       <Suspense>
         <Await resolve={invites}>
           {(invites) => (
-            <div className={'grid gap-2'}>
-              {invites.map(invite => <InviteCard key={invite.id} invite={invite} />)}
+            <div className={'grid mt-4 divide-y '}>
+              {invites.map(invite => <div className={'py-4'} key={invite.id}>
+                <InviteCard invite={invite} />
+              </div>)}
             </div>
           )}
         </Await>

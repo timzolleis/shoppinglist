@@ -30,7 +30,6 @@ const ListDetailLayout = () => {
       <Tablink to={LIST_LINKS.DETAILS(listId)}>{t('listDetailsLayout.overview')}</Tablink>
       <Tablink to={LIST_LINKS.SETTINGS(listId)}>{t('listDetailsLayout.settings')}</Tablink>
       <Tablink to={LIST_LINKS.MEMBERS(listId)}>{t('listDetailsLayout.members')}</Tablink>
-      <Tablink to={LIST_LINKS.INVITES(listId)}>{t('listDetailsLayout.invites')}</Tablink>
     </TablinkContainer>
     <div>
       <Outlet />

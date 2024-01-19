@@ -17,10 +17,10 @@ const badgeVariants = cva(
         outline: 'text-foreground',
         green: 'border-green-600 bg-green-500/20 text-green-600',
         red: 'border-red-600 text-red-600 bg-red-500/20',
-        amber: 'border-amber-600 text-amber-600 bg-amber-500/20'
+        amber: 'border-amber-600 text-amber-600 bg-yellow-500/20'
       },
       size: {
-        sm: 'font-normal text-xs',
+        sm: 'font-medium text-xs',
         default: 'text-xs font-semibold'
       },
       rounding: {

@@ -9,6 +9,6 @@ export function requireRouteParam(param: string, params: Params) {
 }
 
 export function getSearchParam(url: string, param: string) {
-  const searchParams = new URLSearchParams(url);
+  const searchParams = new URL(url).searchParams;
   return searchParams.get(param);
 }
