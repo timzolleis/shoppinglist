@@ -1,0 +1,8 @@
+{
+  "application": {
+    "header": "Einkaufslisten"
+  },
+  "actions": {
+    "add": "Neu"
+  }
+}

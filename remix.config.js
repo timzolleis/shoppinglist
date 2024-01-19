@@ -7,5 +7,8 @@ export default {
   // publicPath: "/build/",
   // serverBuildPath: "build/index.js",
   tailwind: true,
-  serverDependenciesToBundle: ["@remix-pwa/sw"]
+  serverDependenciesToBundle: [
+    '@remix-pwa/sw',
+    'remix-i18next',
+    'accept-language-parser']
 };

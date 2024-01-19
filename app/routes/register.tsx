@@ -8,6 +8,7 @@ import { FormErrors, getFormErrors } from '~/utils/error/error.server';
 import { z } from 'zod';
 import { ShoppingBag } from 'lucide-react';
 import { createUser } from '~/models/user.server';
+import { useTranslation } from 'react-i18next';
 
 const registerSchema = zfd.formData({
   name: zfd.text(z.string({ required_error: 'Please enter your name' })),
@@ -38,6 +39,7 @@ const LoginPage = () => {
   const actionData = useActionData<{
     formErrors?: FormErrors<z.infer<typeof registerSchema>>;
   }>();
+  const { t } = useTranslation('authentication');
   return (
     <>
       <div className='p-8 flex h-screen items-center'>
@@ -46,17 +48,17 @@ const LoginPage = () => {
             <span className={'w-full flex justify-center'}>
               <ShoppingBag size={48} />
             </span>
-            <h1 className='text-2xl font-semibold tracking-tight'>Create an account</h1>
+            <h1 className="text-2xl font-semibold tracking-tight">{t('register.header')}</h1>
           </div>
           <div>
             <Form method={'post'}>
               <div className='grid gap-2'>
                 <div className='grid gap-2'>
-                  <Label htmlFor='name'>Name</Label>
+                  <Label htmlFor="name">{t('register.fields.name.label')}</Label>
                   <Input
                     name={'name'}
                     id='name'
-                    placeholder='John Doe'
+                    placeholder={t('register.fields.name.placeholder')}
                     type='text'
                     autoCapitalize='none'
                     autoCorrect='off'
@@ -64,11 +66,11 @@ const LoginPage = () => {
                   <p className={'text-destructive'}>{actionData?.formErrors?.name}</p>
                 </div>
                 <div className='grid gap-2'>
-                  <Label htmlFor='email'>Email</Label>
+                  <Label htmlFor="email">{t('register.fields.email.label')}</Label>
                   <Input
                     name={'email'}
                     id='email'
-                    placeholder='name@example.com'
+                    placeholder={t('register.fields.email.placeholder')}
                     type='email'
                     autoCapitalize='none'
                     autoComplete='email'
@@ -77,11 +79,11 @@ const LoginPage = () => {
                   <p className={'text-destructive'}>{actionData?.formErrors?.email}</p>
                 </div>
                 <div className='grid gap-2'>
-                  <Label htmlFor='password'>Password</Label>
+                  <Label htmlFor="password">{t('register.fields.password.label')}</Label>
                   <Input
                     name={'password'}
                     id='password'
-                    placeholder='examplepassword'
+                    placeholder={t('register.fields.password.placeholder')}
                     type='password'
                     autoComplete={'off'}
                   />
@@ -90,11 +92,11 @@ const LoginPage = () => {
                   </p>
                 </div>
                 <div className='grid gap-2'>
-                  <Label htmlFor='confirmPassword'>Confirm password</Label>
+                  <Label htmlFor="confirmPassword">{t('register.fields.repeatPassword.label')}</Label>
                   <Input
                     name={'confirmPassword'}
                     id='confirmPassword'
-                    placeholder='examplepassword'
+                    placeholder={t('register.fields.repeatPassword.placeholder')}
                     type='password'
                     autoComplete={'off'}
                   />
@@ -102,11 +104,11 @@ const LoginPage = () => {
                     {actionData?.formErrors?.confirmPassword}
                   </p>
                 </div>
-                <Button>Create account</Button>
+                <Button>{t('register.buttons.createAccount')}</Button>
                 <span className={'text-sm text-muted-foreground text-center'}>
-                  Already have an account?{' '}
+                 {t('register.footer.haveAccount')}{' '}
                   <Link className={'font-medium underline'} to={'/login'}>
-                    Login here
+                   {t('register.footer.login')}
                   </Link>
                 </span>
               </div>

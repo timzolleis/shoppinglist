@@ -1,0 +1,63 @@
+{
+  "noLists": {
+    "createList": "create list",
+    "description": "You have no lists yet. Create one to get started.",
+    "header": "no lists"
+  },
+  "noDeletedLists": {
+    "header": "No deleted lists",
+    "description": "You didnt delete anything yet! Nice!",
+    "seeMyLists": "See my lists"
+  },
+  "listLayout": {
+    "allLists": "All Lists",
+    "deletedLists": "Deleted Lists",
+    "header": "Lists"
+  },
+  "listDetailsLayout": {
+    "overview": "Overview",
+    "settings": "Settings",
+    "members": "Members",
+    "invites": "Invites",
+    "pendingInvites": "Pending Invites"
+  },
+  "noMembers": {
+    "header": "No members",
+    "description": "You have no members in this list yet. Invite some to get started.",
+    "inviteMembers": "Invite members"
+  },
+  "noInvites": {
+    "header": "No Invites",
+    "description": "You have no invites in this list yet. Invite someone to get started.",
+    "inviteMembers": "Invite members"
+  },
+  "invites": {
+    "header": "Invites",
+    "new": {
+      "header": "New Invite",
+      "description": "Create a new invite for this list to share it with someone",
+      "fields": {
+        "email": {
+          "label": "E-Mail",
+          "placeholder": "E-Mail"
+        },
+        "validity": {
+          "label": "Validity (days)",
+          "placeholder": "7"
+        }
+      },
+      "buttons": {
+        "create": "Create Invite"
+      }
+    },
+    "status": {
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "declined": "Declined"
+    }
+  },
+  "listInvitesLayout": {
+    "showAll": "All",
+    "showOpen": "Open"
+  }
+}

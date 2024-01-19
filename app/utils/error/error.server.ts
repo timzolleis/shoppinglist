@@ -13,7 +13,17 @@ export function getErrorMessage(error: unknown) {
 
 export function getFormErrors(e: unknown) {
   if (e instanceof ZodError) {
-    return e.formErrors.fieldErrors;
+    //Go through each key and make it lowercase
+    const keys = Object.keys(e.formErrors.fieldErrors);
+    const formErrors = new Map<string, string>();
+    keys.forEach(key => {
+      const error = e.formErrors.fieldErrors[key];
+      if (error) {
+        const message = `errors.${error?.[0].toLowerCase()}`;
+        formErrors.set(key, message);
+      }
+    });
+    return Object.fromEntries(formErrors);
   }
   return undefined;
 }

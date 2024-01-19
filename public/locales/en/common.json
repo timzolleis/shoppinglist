@@ -1,0 +1,8 @@
+{
+  "application": {
+    "header": "Lists"
+  },
+  "actions": {
+    "add": "Add"
+  }
+}

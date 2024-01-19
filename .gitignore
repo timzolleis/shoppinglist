@@ -6,3 +6,4 @@ node_modules
 .env
 public/entry.worker.js
 .yarn/*.gz
+app/utils/locale/*.json

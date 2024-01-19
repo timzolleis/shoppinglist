@@ -1,0 +1,63 @@
+{
+  "noLists": {
+    "createList": "Neue Liste anlegen",
+    "description": "Du hast noch keine Listen, leg mal eine an und ab geht die Post",
+    "header": "Hier ist die blanke Einöde, wo eigentlich blühende Listen sein sollten"
+  },
+  "noDeletedLists": {
+    "description": "Du hast noch nichts gelöscht! Sehr schön!",
+    "seeMyLists": "Meine Listen",
+    "header": "Keine gelöschten Listen"
+  },
+  "listLayout": {
+    "allLists": "Alle Listen",
+    "deletedLists": "Gelöschte Listen",
+    "header": "Listen"
+  },
+  "listDetailsLayout": {
+    "overview": "Übersicht",
+    "settings": "Einstellungen",
+    "members": "Mitglieder",
+    "invites": "Einladungen",
+    "pendingInvites": "Ausstehende Einladungen"
+  },
+  "noMembers": {
+    "header": "Keine Mitglieder",
+    "description": "Aktuell befinden sich keine Mitglieder in dieser Liste. Füge welche hinzu, um sie zu teilen.",
+    "inviteMembers": "Mitglieder einladen"
+  },
+  "noInvites": {
+    "header": "Keine Einladungen",
+    "description": "Aktuell befinden sich keine Einladungen in dieser Liste. Erstelle eine Einladung, um sie hier anzuzeigen.",
+    "inviteMembers": "Mitglieder einladen"
+  },
+  "invites": {
+    "header": "Einladungen",
+    "new": {
+      "header": "Neue Einladung",
+      "description": "Erstelle eine neue Einladung, um sie mit anderen zu teilen.",
+      "fields": {
+        "email": {
+          "label": "E-Mail",
+          "placeholder": "E-Mail"
+        },
+        "validity": {
+          "label": "Gültigkeitsdauer (Tage)",
+          "placeholder": "7"
+        }
+      },
+      "buttons": {
+        "create": "Neue Einladung"
+      }
+    },
+    "status": {
+      "pending": "Ausstehend",
+      "declined": "Abgelehnt",
+      "accepted": "Akzeptiert"
+    }
+  },
+  "listInvitesLayout": {
+    "showAll": "Alle",
+    "showOpen": "Offen"
+  }
+}
