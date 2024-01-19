@@ -8565,6 +8565,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"remix-toast@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "remix-toast@npm:1.1.0"
+  dependencies:
+    zod: "npm:^3.22.3"
+  peerDependencies:
+    "@remix-run/server-runtime": ">=1.15"
+  checksum: 798e62f799922ce957e92adcdd4e473e208207b76be0ee6c011c19a5d8e780ec696adbf22c66877cd11cd378f03b08bd12f74af62d69789130f75c91a94becf4
+  languageName: node
+  linkType: hard
+
 "remix-utils@npm:^7.5.0":
   version: 7.5.0
   resolution: "remix-utils@npm:7.5.0"
@@ -8817,7 +8828,9 @@ __metadata:
     remix-auth-form: "npm:^1.4.0"
     remix-i18next: "npm:^5.5.0"
     remix-pwa: "npm:^3.0.19"
+    remix-toast: "npm:^1.1.0"
     remix-utils: "npm:^7.5.0"
+    sonner: "npm:^1.3.1"
     tailwind-merge: "npm:^2.2.0"
     tailwindcss: "npm:^3.4.0"
     tailwindcss-animate: "npm:^1.0.7"
@@ -9106,6 +9119,16 @@ __metadata:
     ip: "npm:^2.0.0"
     smart-buffer: "npm:^4.2.0"
   checksum: 43f69dbc9f34fc8220bc51c6eea1c39715ab3cfdb115d6e3285f6c7d1a603c5c75655668a5bbc11e3c7e2c99d60321fb8d7ab6f38cda6a215fadd0d6d0b52130
+  languageName: node
+  linkType: hard
+
+"sonner@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "sonner@npm:1.3.1"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  checksum: 324d2b2edb8bf15a38239f67e533bbf9f38425adf432c9542e7a9610b7451ec5d4082d2e8ddb564096f63f44ba7ec4d2e137f8b0af1786a0becac346fae2b28a
   languageName: node
   linkType: hard
 
@@ -10497,7 +10520,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.22.4":
+"zod@npm:^3.22.3, zod@npm:^3.22.4":
   version: 3.22.4
   resolution: "zod@npm:3.22.4"
   checksum: 7578ab283dac0eee66a0ad0fc4a7f28c43e6745aadb3a529f59a4b851aa10872b3890398b3160f257f4b6817b4ce643debdda4fb21a2c040adda7862cab0a587

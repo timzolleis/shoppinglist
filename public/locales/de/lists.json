@@ -59,5 +59,9 @@
   "listInvitesLayout": {
     "showAll": "Alle",
     "showOpen": "Offen"
+  },
+  "toasts": {
+    "inviteCreated": "Einladung erstellt",
+    "inviteDeleted": "Einladung gelöscht"
   }
 }

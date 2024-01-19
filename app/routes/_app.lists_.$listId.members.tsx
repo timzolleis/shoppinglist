@@ -26,8 +26,9 @@ import { z } from 'zod';
 import { getFormErrors } from '~/utils/error/error.server';
 import { useIsLoading } from '~/utils/hooks/use-is-loading';
 import { usePendingInvites } from '~/utils/hooks/use-pending-invites';
-import { useToast } from '~/components/ui/use-toast';
 import { createId } from '@paralleldrive/cuid2';
+import i18next from '~/i18next.server';
+import { jsonWithError, jsonWithSuccess } from 'remix-toast';
 
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
@@ -82,6 +83,8 @@ export const action = async ({ request, params }: LoaderFunctionArgs) => {
   requireListOwnership(list, user);
   const formData = await request.formData();
   const intent = formData.get('intent');
+  const errorTranslation = await i18next.getFixedT(request, 'errors');
+  const messageTranslation = await i18next.getFixedT(request, 'lists');
   switch (intent) {
     case LIST_INVITE_INTENTS.CREATE: {
       try {
@@ -94,19 +97,19 @@ export const action = async ({ request, params }: LoaderFunctionArgs) => {
         //Check if there is already an invite for this email
         const pendingInvites = await getPendingInvitesForEmailAndList(email, listId);
         if (pendingInvites.length > 0) {
-          return json({ success: false, errors: { email: 'errors.alreadyInvited' } });
+          return jsonWithError(null, errorTranslation('user.alreadyInvited'));
         }
         await createInvite(id, listId, email);
-        return json({ success: true });
+        return jsonWithSuccess(null, messageTranslation('toasts.inviteCreated'));
       } catch (e) {
-        return json({ success: false, errors: getFormErrors(e) });
+        return jsonWithError(null, errorTranslation('form.invalid'));
       }
     }
     case LIST_INVITE_INTENTS.DELETE: {
       try {
         const { inviteId } = inviteSchemas.delete.parse(formData);
         await deleteInvite(inviteId);
-        return json({ success: true });
+        return jsonWithSuccess(null, messageTranslation('toasts.inviteDeleted'));
       } catch (e) {
         return json({ success: false, errors: getFormErrors(e) });
       }
@@ -115,12 +118,12 @@ export const action = async ({ request, params }: LoaderFunctionArgs) => {
 };
 
 const ListMembersPage = () => {
-  const { list, invites, members } = useLoaderData<typeof loader>();
+  const { invites, members } = useLoaderData<typeof loader>();
   const { t } = useTranslation('lists');
   const pendingInvites = usePendingInvites();
   return <div className={'mt-4'}>
     <MaxWidth>
-      <h2 className={'pb-4 font-medium text-xl'}>{t('invites.new.header')}</h2>
+      <h2 className={'font-medium text-xl'}>{t('invites.new.header')}</h2>
       <CreateInviteForm />
       <Separator className={'my-10'} />
       <Suspense>
@@ -166,19 +169,9 @@ const CreateInviteForm = () => {
   const { t } = useTranslation('lists');
   const inputRef = React.useRef<HTMLInputElement>(null);
   const fetcher = useFetcher<ActionData>();
-  const { toast } = useToast();
   useEffect(() => {
     if (inputRef.current && fetcher.formAction) {
       inputRef.current.value = '';
-    }
-  }, [fetcher]);
-  //TODO: Use flash session
-  useEffect(() => {
-    if (fetcher.data?.success === false) {
-      toast({
-        title: 'Error',
-        description: fetcher.data.errors?.email
-      });
     }
   }, [fetcher]);
   return (
