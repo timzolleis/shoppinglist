@@ -4,14 +4,15 @@ import { cn } from '~/utils/css/css';
 import { buttonVariants } from '~/components/ui/button';
 import { Plus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { PageHeader } from '~/components/features/page/page-header';
 
 
 const ListLayout = () => {
   const { t } = useTranslation('lists');
 
   return <>
-    <div className={'flex justify-between'}>
-      <h2 className={'text-2xl font-semibold'}>{t('listLayout.header')}</h2>
+    <PageHeader>{t('listLayout.header')}</PageHeader>
+    <div className={'flex justify-end'}>
       <Link to={'new'} className={cn('gap-2', buttonVariants())}>
         <Plus className={'w-4 h-4'} />
         {t('actions.add', { ns: 'common' })}

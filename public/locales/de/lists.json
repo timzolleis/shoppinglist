@@ -31,6 +31,10 @@
     "description": "Aktuell befinden sich keine Einladungen in dieser Liste. Erstelle eine Einladung, um sie hier anzuzeigen.",
     "inviteMembers": "Mitglieder einladen"
   },
+  "noInvitesUser": {
+    "header": "Keine Einladungen",
+    "description": "Du hast noch keine Einladungen erhalten. Frag doch mal jemanden, ob er dich einlädt."
+  },
   "invites": {
     "header": "Einladungen",
     "new": {
@@ -56,12 +60,29 @@
       "accepted": "Akzeptiert"
     }
   },
+  "list": {
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Name"
+      },
+      "tags": {
+        "label": "Tags",
+        "placeholder": "Tags"
+      }
+    },
+    "buttons": {
+      "update": "Aktualisieren",
+      "createTag": "Tag erstellen"
+    }
+  },
   "listInvitesLayout": {
     "showAll": "Alle",
     "showOpen": "Offen"
   },
   "toasts": {
     "inviteCreated": "Einladung erstellt",
-    "inviteDeleted": "Einladung gelöscht"
+    "inviteDeleted": "Einladung gelöscht",
+    "listUpdated": "Liste aktualisiert"
   }
 }

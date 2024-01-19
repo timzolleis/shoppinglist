@@ -1,5 +1,11 @@
 {
   "sidebar": {
-    "myLists": "Meine Listen"
+    "home": "Startseite",
+    "myLists": "Meine Listen",
+    "invitations": "Einladungen"
+  },
+  "userMenu": {
+    "profile": "Profil",
+    "logout": "Abmelden"
   }
 }

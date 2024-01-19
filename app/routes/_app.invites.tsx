@@ -13,7 +13,8 @@ import { getErrorMessage, getFormErrors } from '~/utils/error/error.server';
 import { updateList } from '~/models/list.server';
 import { invariantResponse } from '@epic-web/invariant';
 import { getNowAsISO } from '~/utils/date/date';
-import { Badge } from '~/components/ui/badge';
+import { Tablink, TablinkContainer } from '~/components/ui/tablink';
+import { NoInvitesForUser } from '~/components/features/list-invites/no-invites-for-user';
 
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -77,25 +78,26 @@ const InvitesPage = () => {
     searchParams.set('showAll', showAll.toString());
     setSearchParams(searchParams);
   };
-
+  console.log(showAll);
 
   return (
     <>
       <PageHeader>{t('invites.header')}</PageHeader>
-      <div className={'flex items-center gap-2'}>
-        <Badge onClick={() => setShowAll(false)}
-               variant={showAll ? 'outline' : 'default'}>{t('listInvitesLayout.showOpen')}</Badge>
-        <Badge onClick={() => setShowAll(true)}
-               variant={showAll ? 'default' : 'outline'}>{t('listInvitesLayout.showAll')}</Badge>
-      </div>
+      <TablinkContainer>
+        <Tablink to={'?showAll=false'} overrideIsActive={!showAll}>{t('listInvitesLayout.showOpen')}</Tablink>
+        <Tablink to={'?showAll=true'} overrideIsActive={showAll}>{t('listInvitesLayout.showAll')}</Tablink>
+      </TablinkContainer>
       <Suspense>
         <Await resolve={invites}>
           {(invites) => (
-            <div className={'grid mt-4 divide-y '}>
-              {invites.map(invite => <div className={'py-4'} key={invite.id}>
-                <InviteCard invite={invite} />
-              </div>)}
-            </div>
+            <>
+              {invites.length === 0 && <NoInvitesForUser />}
+              <div className={'grid mt-4 divide-y '}>
+                {invites.map(invite => <div className={'py-4'} key={invite.id}>
+                  <InviteCard invite={invite} />
+                </div>)}
+              </div>
+            </>
           )}
         </Await>
       </Suspense></>

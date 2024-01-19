@@ -123,7 +123,7 @@ const ListMembersPage = () => {
   const pendingInvites = usePendingInvites();
   return <div className={'mt-4'}>
     <MaxWidth>
-      <h2 className={'font-medium text-xl'}>{t('invites.new.header')}</h2>
+      <p className={'font-medium text-sm text-muted-foreground'}>{t('invites.new.header')}</p>
       <CreateInviteForm />
       <Separator className={'my-10'} />
       <Suspense>
@@ -175,14 +175,14 @@ const CreateInviteForm = () => {
     }
   }, [fetcher]);
   return (
-    <fetcher.Form method={'post'} className={'space-y-4'}>
+    <fetcher.Form method={'post'} className={'space-y-3'}>
       <input type="hidden" name={'intent'} value={LIST_INVITE_INTENTS.CREATE} />
       <input type={'hidden'} name={'id'} value={createId()} />
-      <div className={'space-y-2'}>
+      <div className={'space-y-3'}>
         <Label>{t('invites.new.fields.email.label')}</Label>
-        <div className={'flex gap-4'}>
+        <div className={'flex gap-4 items-stretch'}>
           <Input ref={inputRef} type={'email'} name={'email'} placeholder={t('invites.new.fields.email.placeholder')} />
-          <Button isLoading={isCreatingInvite} size={'sm'}>{t('invites.new.buttons.create')}</Button>
+          <Button className={'text-sm'} isLoading={isCreatingInvite}>{t('invites.new.buttons.create')}</Button>
         </div>
       </div>
     </fetcher.Form>

@@ -20,7 +20,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     failureRedirect: '/login'
   });
   const lists =  findUserLists(user.id);
-  const defaultListId = getDefaultListId(user.id);
+  const defaultListId = await getDefaultListId(user.id);
   return defer({ lists, defaultListId });
 };
 

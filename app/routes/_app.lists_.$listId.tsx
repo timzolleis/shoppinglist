@@ -7,6 +7,7 @@ import { requireRouteParam } from '~/utils/general/request.server';
 import { requireAuthentication } from '~/utils/auth/authentication.server';
 import { findListAndRequireOwnership } from '~/models/list.server';
 import { useTranslation } from 'react-i18next';
+import { PageHeader } from '~/components/features/page/page-header';
 
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
@@ -23,7 +24,7 @@ const ListDetailLayout = () => {
   return <>
     <Await resolve={data.list}>
       {list => {
-        return <h2 className={'text-2xl font-semibold'}>{list.name}</h2>;
+        return <PageHeader>{list.name}</PageHeader>;
       }}
     </Await>
     <TablinkContainer>
