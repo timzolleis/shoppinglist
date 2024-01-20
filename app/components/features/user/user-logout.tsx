@@ -1,5 +1,5 @@
 import { useOptionalUser } from '~/utils/hooks/use-optional-user';
-import { ChevronDown, User } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,6 +11,7 @@ import {
 import { Button } from '~/components/ui/button';
 import { Form, Link } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
+import { Avatar, AvatarImage } from '~/components/ui/avatar';
 
 export const UserLogout = () => {
   const user = useOptionalUser();
@@ -18,7 +19,9 @@ export const UserLogout = () => {
   return <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="ghost" className="flex items-center gap-2 text-sm">
-        <User className={"bg-secondary p-1 w-8 h-8 rounded-full"} />
+        <Avatar className={'w-6 h-6'}>
+          <AvatarImage src="/images/profile" />
+        </Avatar>
         <p> {user?.name}</p>
         <ChevronDown className={'text-secondary-foreground w-4 h-4'} />
       </Button>
