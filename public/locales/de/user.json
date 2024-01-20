@@ -1,0 +1,25 @@
+{
+  "profile": {
+    "title": "Profil",
+    "description": "Verwalten Sie Ihre persönlichen Daten."
+  },
+  "fields": {
+    "name": "Name",
+    "email": "E-Mail"
+  },
+  "buttons": {
+    "update": "Aktualisieren",
+    "deleteAccount": "Konto löschen",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen"
+  },
+  "deleteAccount": {
+    "title": "Konto löschen",
+    "description": "Alle Ihre Daten werden gelöscht. Dies kann nicht rückgängig gemacht werden.",
+    "confirmTitle": "Sind Sie sicher?",
+    "confirmDescription": "Geben Sie Ihr Passwort ein, um fortzufahren."
+  },
+  "toasts": {
+    "updated": "Profil aktualisiert"
+  }
+}

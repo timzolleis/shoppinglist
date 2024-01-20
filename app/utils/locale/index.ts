@@ -3,7 +3,7 @@ import { writeImports } from '~/utils/locale/importer';
 
 //TODO: We maybe could speed things up with calculating the checksum of every file and storing it in a file - so we can know if we need to reparse and regenerate everything
 export const localesRoot = 'public/locales';
-export const referenceLocale = 'en';
+export const referenceLocale = 'de';
 export const reportRoot = 'app/utils/locale';
 export const reportFile = 'translation-report.json';
 

@@ -19,7 +19,7 @@ export function getFormErrors(e: unknown) {
     keys.forEach(key => {
       const error = e.formErrors.fieldErrors[key];
       if (error) {
-        const message = `errors.${error?.[0].toLowerCase()}`;
+        const message = `${error?.[0]}`;
         formErrors.set(key, message);
       }
     });

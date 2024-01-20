@@ -4,5 +4,9 @@
   },
   "form": {
     "invalid": "Bitte überprüfen Sie Ihre Eingaben."
+  },
+  "field": {
+    "required": "Das Feld {{field}} ist erforderlich.",
+    "wrongType": "Das Feld {{field}} muss vom Typ {{type}} sein."
   }
 }
