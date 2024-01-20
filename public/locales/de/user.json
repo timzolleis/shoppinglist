@@ -3,13 +3,20 @@
     "title": "Profil",
     "description": "Verwalten Sie Ihre persönlichen Daten."
   },
+  "security": {
+    "title": "Sicherheit",
+    "description": "Verwalten Sie Ihr Passwort."
+  },
   "fields": {
     "name": "Name",
-    "email": "E-Mail"
+    "email": "E-Mail",
+    "password": "Passwort",
+    "passwordConfirmation": "Passwort bestätigen"
   },
   "buttons": {
     "update": "Aktualisieren",
     "deleteAccount": "Konto löschen",
+    "changePassword": "Passwort ändern",
     "cancel": "Abbrechen",
     "confirm": "Bestätigen"
   },

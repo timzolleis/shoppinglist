@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger
 } from '~/components/ui/dropdown-menu';
 import { Button } from '~/components/ui/button';
-import { Form } from '@remix-run/react';
+import { Form, Link } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
 
 export const UserLogout = () => {
@@ -37,6 +37,9 @@ export const UserLogout = () => {
       <Form method={"post"} action={"/logout"}>
         <button className={'w-full text-left'}>{t('userMenu.logout')}</button>
       </Form>
+      </DropdownMenuItem>
+      <DropdownMenuItem asChild={true}>
+        <Link to={'/profile'}>{t('userMenu.profile')}</Link>
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>;

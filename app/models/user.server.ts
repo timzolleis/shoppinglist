@@ -78,3 +78,19 @@ export async function updateUser(userId: User['id'], data: Prisma.UserUpdateInpu
     data
   });
 }
+
+export async function findPasswordByUserId(userId: User['id']) {
+  return prisma.password.findUnique({
+    where: {
+      userId
+    }
+  });
+}
+
+export async function deleteUser(userId: User['id']) {
+  return prisma.user.delete({
+    where: {
+      id: userId
+    }
+  });
+}
