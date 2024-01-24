@@ -7,3 +7,7 @@ node_modules
 public/entry.worker.js
 .yarn/*.gz
 app/utils/locale/*.json
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
