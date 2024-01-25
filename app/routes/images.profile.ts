@@ -1,6 +1,5 @@
 import { LoaderFunction } from '@remix-run/node';
 import { authenticator } from '~/utils/auth/authentication.server';
-import fs from 'fs';
 import { getProfileImage } from '~/utils/supabase/file.server';
 
 
@@ -11,15 +10,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       status: 404
     });
   }
-
-
-  //Load a static image
-  const image = fs.readdirSync('./public').filter((file) => file.endsWith('.jpg'))?.[0];
-  if (!image) {
-    throw new Response(null, {
-      status: 404
-    });
-  }
+  //TODO: Test what happens if this is undefined
   const imageBuffer = await getProfileImage(user);
   return new Response(imageBuffer, {
     headers: {
