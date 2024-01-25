@@ -19,7 +19,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const user = await authenticator.isAuthenticated(request, {
     failureRedirect: '/login'
   });
-  const lists =  findUserLists(user.id);
+  const lists = findUserLists(user.id);
   const defaultListId = await getDefaultListId(user.id);
   return defer({ lists, defaultListId });
 };
@@ -82,7 +82,7 @@ export const action = async ({ request }: LoaderFunctionArgs) => {
 const ListPage = () => {
   const { lists } = useLoaderData<typeof loader>();
   return <>
-    <Suspense>
+    <Suspense fallback={<p>Loading list</p>}>
       <Await resolve={lists}>
         {(lists) => (
           <>

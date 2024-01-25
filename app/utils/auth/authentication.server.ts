@@ -9,7 +9,7 @@ import { invariant } from '@epic-web/invariant';
 
 export const authenticator = new Authenticator<User>(sessionStorage);
 
-async function verifyPassword(password: string, hash: string) {
+export async function verifyPassword(password: string, hash: string) {
   return pbkdf2.compare(password, hash);
 }
 

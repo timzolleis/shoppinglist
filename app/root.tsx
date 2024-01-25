@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import { getToast } from 'remix-toast';
 import { toast as notify, Toaster } from 'sonner';
+import { findUserById } from '~/models/user.server';
 
 export const links: LinksFunction = () => [
   {
@@ -18,7 +19,9 @@ export const links: LinksFunction = () => [
 export const loader = async ({request}: LoaderFunctionArgs) => {
   const locale = await i18next.getLocale(request);
   const { toast, headers } = await getToast(request);
-  const user = await authenticator.isAuthenticated(request);
+  const authenticatedUser = await authenticator.isAuthenticated(request);
+  //Fetch the user from the database
+  const user = authenticatedUser ? await findUserById(authenticatedUser?.id) : null;
   const userWithoutPassword = user ? { ...user, password: undefined } : null;
   return json({ locale, user: userWithoutPassword, toast }, { headers });
 }

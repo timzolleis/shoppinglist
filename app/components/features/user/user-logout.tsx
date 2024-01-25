@@ -1,25 +1,29 @@
 import { useOptionalUser } from '~/utils/hooks/use-optional-user';
-import { ChevronDown, User } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
 import { Button } from '~/components/ui/button';
-import { Form } from '@remix-run/react';
+import { Form, Link } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
+import { Avatar, AvatarImage } from '~/components/ui/avatar';
 
 export const UserLogout = () => {
   const user = useOptionalUser();
+  console.log(user);
   const { t } = useTranslation('navigation');
   return <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="ghost" className="flex items-center gap-2 text-sm">
-        <User className={"bg-secondary p-1 w-8 h-8 rounded-full"} />
-        <p> {user?.name}</p>
+        <Avatar className={'w-6 h-6'}>
+          <AvatarImage className={'object-cover'} src={`/images/profile?image=${user?.imageUrl}`} />
+        </Avatar>
+        <p>{user?.name}</p>
         <ChevronDown className={'text-secondary-foreground w-4 h-4'} />
       </Button>
     </DropdownMenuTrigger>
@@ -37,6 +41,9 @@ export const UserLogout = () => {
       <Form method={"post"} action={"/logout"}>
         <button className={'w-full text-left'}>{t('userMenu.logout')}</button>
       </Form>
+      </DropdownMenuItem>
+      <DropdownMenuItem asChild={true}>
+        <Link to={'/profile'}>{t('userMenu.profile')}</Link>
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>;

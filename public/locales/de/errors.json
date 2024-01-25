@@ -4,5 +4,17 @@
   },
   "form": {
     "invalid": "Bitte überprüfen Sie Ihre Eingaben."
+  },
+  "field": {
+    "required": "Das Feld {{field}} ist erforderlich.",
+    "wrongType": "Das Feld {{field}} muss vom Typ {{type}} sein."
+  },
+  "deleteAccount": {
+    "wrongPassword": "Das Passwort ist falsch."
+  },
+  "changePassword": {
+    "mismatch": "Die Passwörter stimmen nicht überein.",
+    "passwordMissing": "Bitte geben Sie ein neues Passwort ein.",
+    "confirmationMissing": "Bitte bestätigen Sie das neue Passwort."
   }
 }

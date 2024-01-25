@@ -1,0 +1,33 @@
+{
+  "profile": {
+    "title": "Profil",
+    "description": "Verwalten Sie Ihre persönlichen Daten."
+  },
+  "security": {
+    "title": "Sicherheit",
+    "description": "Verwalten Sie Ihr Passwort."
+  },
+  "fields": {
+    "name": "Name",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "passwordConfirmation": "Passwort bestätigen",
+    "profilePicture": "Profilbild"
+  },
+  "buttons": {
+    "update": "Aktualisieren",
+    "deleteAccount": "Konto löschen",
+    "changePassword": "Passwort ändern",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen"
+  },
+  "deleteAccount": {
+    "title": "Konto löschen",
+    "description": "Alle Ihre Daten werden gelöscht. Dies kann nicht rückgängig gemacht werden.",
+    "confirmTitle": "Sind Sie sicher?",
+    "confirmDescription": "Geben Sie Ihr Passwort ein, um fortzufahren."
+  },
+  "toasts": {
+    "updated": "Profil aktualisiert"
+  }
+}

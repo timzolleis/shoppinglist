@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as prettier from 'prettier';
 
 export const resourceFileRoot = 'app/utils/locale/resources.ts';
-const tsAliasedReferenceImportPath = '@/locales/en';
+const tsAliasedReferenceImportPath = '@/locales/de';
 
 export async function writeImports(files: TranslationFile[]) {
   console.log('🔄Generating type imports...');

@@ -2,6 +2,7 @@ import { List, User } from '@prisma/client';
 import { prisma } from '~/utils/db/prisma.server';
 import pbkdf2 from 'pbkdf2-passworder';
 import { getNowAsISO } from '~/utils/date/date';
+import { Prisma } from '.prisma/client';
 
 
 export function findUserById(id: User['id']) {
@@ -65,6 +66,31 @@ export function setDefaultList({ userId, listId }: { userId: User['id'], listId:
     },
     data: {
       defaultListId: listId
+    }
+  });
+}
+
+export async function updateUser(userId: User['id'], data: Prisma.UserUpdateInput) {
+  return prisma.user.update({
+    where: {
+      id: userId
+    },
+    data
+  });
+}
+
+export async function findPasswordByUserId(userId: User['id']) {
+  return prisma.password.findUnique({
+    where: {
+      userId
+    }
+  });
+}
+
+export async function deleteUser(userId: User['id']) {
+  return prisma.user.delete({
+    where: {
+      id: userId
     }
   });
 }
