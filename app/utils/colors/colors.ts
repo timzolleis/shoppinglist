@@ -6,10 +6,19 @@ export type Color = {
 
 }
 
-export function rgbToHex({ red, green, blue }: Color) {
-  return `#${red.toString(16)}${green.toString(16)}${blue.toString(16)}`;
+function numberAsHex(value: number) {
+  const numberAsHex = value.toString(16);
+  return numberAsHex.padStart(2, '0');
 }
 
+export function rgbToHex({ red, green, blue }: Color) {
+  return `#${numberAsHex(red)}${numberAsHex(green)}${numberAsHex(blue)}`;
+}
+
+/**
+ * convert a hex value to a rgb object
+ * @param hex the hex number with a leading '#', e.g. '#12ab34'
+ */
 export function hexToRgb(hex: string) {
   const red = parseInt(hex.slice(1, 3), 16),
     green = parseInt(hex.slice(3, 5), 16),
