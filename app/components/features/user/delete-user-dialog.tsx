@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '~/components/ui/button';
 import { Form } from '@remix-run/react';
 import { Input } from '~/components/ui/input';
-import { PROFILE_INTENTS } from '~/routes/_app.profile';
+import { PROFILE_INTENTS } from '~/routes/_app.profile/route';
 
 
 export const DeleteUserDialog = ({ error }: { error?: string }) => {

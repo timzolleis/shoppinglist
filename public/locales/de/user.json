@@ -11,7 +11,8 @@
     "name": "Name",
     "email": "E-Mail",
     "password": "Passwort",
-    "passwordConfirmation": "Passwort bestätigen"
+    "passwordConfirmation": "Passwort bestätigen",
+    "profilePicture": "Profilbild"
   },
   "buttons": {
     "update": "Aktualisieren",

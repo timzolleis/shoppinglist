@@ -1,4 +1,10 @@
-import { ActionFunctionArgs, json } from '@remix-run/node';
+import {
+  ActionFunctionArgs,
+  json,
+  unstable_composeUploadHandlers,
+  unstable_createMemoryUploadHandler,
+  unstable_parseMultipartFormData
+} from '@remix-run/node';
 import { authenticator, requireAuthentication, verifyPassword } from '~/utils/auth/authentication.server';
 import { invariantResponse } from '@epic-web/invariant';
 import { PageHeader } from '~/components/features/page/page-header';
@@ -8,16 +14,25 @@ import { Label } from '~/components/ui/label';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
 import { Separator } from '~/components/ui/separator';
-import { zfd } from 'zod-form-data';
-import { z } from 'zod';
 import { getFormErrors } from '~/utils/error/error.server';
 import i18next from '~/i18next.server';
-import { TFunction } from 'i18next';
 import { deleteUser, findPasswordByUserId, updateUser } from '~/models/user.server';
 import { jsonWithSuccess } from 'remix-toast';
 import { commitSession, getSession } from '~/utils/session/session.server';
 import { DeleteUserDialog } from '~/components/features/user/delete-user-dialog';
 import pbkdf2 from 'pbkdf2-passworder';
+import { ProfilePictureInput } from '~/components/ui/profile-picture-input';
+import {
+  changePasswordSchema,
+  ChangePasswordSchema,
+  Combine,
+  deleteUserSchema,
+  DeleteUserSchema,
+  updateUserSchema,
+  UpdateUserSchema
+} from '~/routes/_app.profile/schemas';
+import { uploadProfileImage } from '~/utils/supabase/file.server';
+import { useIsLoading } from '~/utils/hooks/use-is-loading';
 
 
 export const loader = async ({ request }: ActionFunctionArgs) => {
@@ -26,38 +41,31 @@ export const loader = async ({ request }: ActionFunctionArgs) => {
   return json({ user });
 };
 
-
 export const PROFILE_INTENTS = {
   UPDATE: 'update',
   CHANGE_PASSWORD: 'changePassword',
   DELETE_ACCOUNT: 'deleteAccount'
 };
 
-type UpdateUserSchema = z.infer<ReturnType<typeof updateUserSchema>>;
 
-const updateUserSchema = (translation: TFunction<'errors', undefined>) => zfd.formData({
-  name: zfd.text(z.string({ required_error: translation('field.required', { field: 'name' }) }).min(3)),
-  email: zfd.text(z.string({ required_error: translation('field.required', { field: 'email' }) }).email({
-    message: (translation('field.wrongType', {
-      field: 'email',
-      type: 'email'
-    }))
-  }))
-});
 
-type DeleteUserSchema = z.infer<ReturnType<typeof deleteUserSchema>>;
-const deleteUserSchema = (translation: TFunction<'errors', undefined>) => zfd.formData({
-  password: zfd.text(z.string({ required_error: translation('field.required', { field: 'password' }) }).min(3))
-});
-
-type ChangePasswordSchema = z.infer<ReturnType<typeof changePasswordSchema>>;
-const changePasswordSchema = (translation: TFunction<'errors', undefined>) => zfd.formData({
-  password: zfd.text(z.string({ required_error: translation('changePassword.passwordMissing') }).min(3)),
-  passwordConfirmation: zfd.text(z.string({ required_error: translation('changePassword.confirmationMissing') }).min(3))
-});
 export const action = async ({ request }: ActionFunctionArgs) => {
+  const uploadHandler = unstable_composeUploadHandlers(
+    async ({ data, filename, contentType, name }) => {
+      if (name !== 'profilePicture') {
+        return undefined;
+      }
+      const fileArray = [];
+      for await (const file of data) {
+        fileArray.push(file);
+      }
+      const file = new File(fileArray, filename || 'temp', { type: contentType });
+      return await uploadProfileImage(file);
+    },
+    unstable_createMemoryUploadHandler()
+  );
   const user = await requireAuthentication(request);
-  const formData = await request.formData();
+  const formData = await unstable_parseMultipartFormData(request, uploadHandler);
   const errorTranslation = await i18next.getFixedT(request, 'errors');
   const userTranslation = await i18next.getFixedT(request, 'user');
   const intent = formData.get('intent');
@@ -65,8 +73,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     case PROFILE_INTENTS.UPDATE: {
       try {
         const data = updateUserSchema(errorTranslation).parse(formData);
+        const imageUrl = formData.get('profilePicture')?.toString();
         //Update the user
-        const updated = await updateUser(user.id, data);
+        const updated = await updateUser(user.id, { ...data, imageUrl });
         //Update the session
         const session = await getSession(request);
         session.set('user', updated);
@@ -76,6 +85,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           }
         });
       } catch (e) {
+        console.log(e);
         return json({ formErrors: getFormErrors(e) });
       }
     }
@@ -129,27 +139,19 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 };
 
-
-type Combine<T1, T2, T3> = {
-  [K in keyof T1]: T1[K]
-} & {
-  [K in keyof T2]: T2[K]
-} & {
-  [K in keyof T3]: T3[K]
-}
-
 const ProfilePage = () => {
   const { user } = useLoaderData<typeof loader>();
   const actionData = useActionData<{
     formErrors: Combine<UpdateUserSchema, DeleteUserSchema, ChangePasswordSchema>,
   }>();
   const { t } = useTranslation('user');
+  const useLoadingState = (intent: string) => useIsLoading((formData) => formData?.get('intent') === intent);
   return (
     <>
       <PageHeader>{t('profile.title')}</PageHeader>
       <h2 className={'text-xl font-medium'}>{t('profile.title')}</h2>
       <p className={'text-sm text-muted-foreground'}>{t('profile.description')}</p>
-      <Form className={'space-y-4 mt-4'} method={'post'}>
+      <Form className={'space-y-4 mt-4'} method={'post'} encType={'multipart/form-data'}>
         <input type={'hidden'} name={'intent'} value={PROFILE_INTENTS.UPDATE} />
         <div className={'space-y-3'}>
           <Label>{t('fields.name')}</Label>
@@ -161,7 +163,11 @@ const ProfilePage = () => {
           <Input defaultValue={user.email} name={'email'} />
           <p className={'text-xs text-destructive'}>{actionData?.formErrors.email}</p>
         </div>
-        <Button>{t('buttons.update')}</Button>
+        <div className={'space-y-3'}>
+          <Label>{t('fields.profilePicture')}</Label>
+          <ProfilePictureInput name={'profilePicture'} defaultValue={`/images/profile/?image=${user.imageUrl}`} />
+        </div>
+        <Button isLoading={useLoadingState(PROFILE_INTENTS.UPDATE)}>{t('buttons.update')}</Button>
       </Form>
       <Separator className={'my-10'}></Separator>
       <h2 className={'text-xl font-medium'}>{t('security.title')}</h2>

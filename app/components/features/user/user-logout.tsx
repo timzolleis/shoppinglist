@@ -20,9 +20,9 @@ export const UserLogout = () => {
     <DropdownMenuTrigger asChild>
       <Button variant="ghost" className="flex items-center gap-2 text-sm">
         <Avatar className={'w-6 h-6'}>
-          <AvatarImage src="/images/profile" />
+          <AvatarImage className={'object-cover'} src={`/images/profile?image=${user?.imageUrl}`} />
         </Avatar>
-        <p> {user?.name}</p>
+        <p>{user?.name}</p>
         <ChevronDown className={'text-secondary-foreground w-4 h-4'} />
       </Button>
     </DropdownMenuTrigger>

@@ -1,25 +1,31 @@
 import { supabase } from '~/utils/supabase/client.server';
 import { User } from '@prisma/client';
+import { createId } from '@paralleldrive/cuid2';
 
-export async function uploadProfileImage(user: User, file: File) {
+export async function uploadProfileImage(file: File) {
   const contentType = file.type;
-  const fileName = `user_${user.id}`;
-  const { data, error } = await supabase.storage
+  const fileName = `image_${createId()}`;
+  const { error } = await supabase.storage
     .from('avatars')
     .upload(`${fileName}`, file, {
-      contentType
+      contentType,
+      upsert: true
     });
   if (error) {
     console.log(error);
+    return undefined;
   }
-  return data;
+  return fileName;
 }
 
 export async function getProfileImage(user: User) {
-  const fileName = `user_${user.id}`;
-  const { data } = supabase.storage
+  const imageUrl = user.imageUrl;
+  if (!imageUrl) {
+    return undefined;
+  }
+  const { data, error } = await supabase.storage
     .from('avatars')
-    .getPublicUrl(fileName);
+    .download(imageUrl);
   return data;
 }
 
