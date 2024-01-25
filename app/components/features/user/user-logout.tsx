@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
 import { Button } from '~/components/ui/button';
 import { Form, Link } from '@remix-run/react';
@@ -15,6 +15,7 @@ import { Avatar, AvatarImage } from '~/components/ui/avatar';
 
 export const UserLogout = () => {
   const user = useOptionalUser();
+  console.log(user);
   const { t } = useTranslation('navigation');
   return <DropdownMenu>
     <DropdownMenuTrigger asChild>
