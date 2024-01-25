@@ -4,6 +4,9 @@
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "isolatedModules": true,
     "esModuleInterop": true,
+    "types": [
+      "vitest/globals"
+    ],
     "jsx": "react-jsx",
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
@@ -20,7 +23,7 @@
         "./public/*"
       ]
     },
-
+    "skipLibCheck": true,
     // Remix takes care of building everything in `remix build`.
     "noEmit": true
   }
