@@ -12,7 +12,8 @@
   "listLayout": {
     "allLists": "Alle Listen",
     "deletedLists": "Gelöschte Listen",
-    "header": "Listen"
+    "header": "Listen",
+    "scanCode": "Scannen"
   },
   "listDetailsLayout": {
     "overview": "Übersicht",

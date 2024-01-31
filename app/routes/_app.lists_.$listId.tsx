@@ -29,6 +29,8 @@ const ListDetailLayout = () => {
     </Await>
     <TablinkContainer>
       <Tablink to={LIST_LINKS.DETAILS(listId)}>{t('listDetailsLayout.overview')}</Tablink>
+      <Tablink to={LIST_LINKS.SCANS(listId)}>{t('listLayout.scanCode')}</Tablink>
+
       <Tablink to={LIST_LINKS.SETTINGS(listId)}>{t('listDetailsLayout.settings')}</Tablink>
       <Tablink to={LIST_LINKS.MEMBERS(listId)}>{t('listDetailsLayout.members')}</Tablink>
     </TablinkContainer>

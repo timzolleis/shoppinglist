@@ -11,5 +11,5 @@ export const resources = {
   errors,
   lists,
   navigation,
-  user
+  user,
 } as const;
